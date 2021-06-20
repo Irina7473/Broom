@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroomGUI", "BroomGUI\BroomGUI.csproj", "{8DEB29C8-622F-4027-8C90-320D67DDB3E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroomGUI", "BroomGUI\BroomGUI.csproj", "{8DEB29C8-622F-4027-8C90-320D67DDB3E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindFolders", "FindFolders\FindFolders.csproj", "{D8692E43-8458-43A9-9134-BE63AC4AC5EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFind", "TestFind\TestFind.csproj", "{2BBB545C-D48D-46A4-8785-DB78124F01AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8DEB29C8-622F-4027-8C90-320D67DDB3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DEB29C8-622F-4027-8C90-320D67DDB3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DEB29C8-622F-4027-8C90-320D67DDB3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BBB545C-D48D-46A4-8785-DB78124F01AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BBB545C-D48D-46A4-8785-DB78124F01AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BBB545C-D48D-46A4-8785-DB78124F01AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BBB545C-D48D-46A4-8785-DB78124F01AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
