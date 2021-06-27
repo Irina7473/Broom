@@ -12,14 +12,16 @@ namespace Logger
         static string fullPath;
         public static void CreateToFile() // НЕ ПОЛУЧАЕТСЯ - нет доступа
         {
-            //ОШИБКА - доступ запрещен
-            /*var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //Нужно создать папку для журналов,тк их будет много
+            //Исправила ошибку - работает
+            /*
+            var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Console.WriteLine(appDir);
-            var relativePath = @"\logBroom1.txt";            
-            fullPath = Path.Combine(appDir, relativePath);  */
-
-            //ОШИБКА - доступ запрещен во всех вариантах MyDocuments  UserProfile  ApplicationData
-            var relativePath = @"\logBroom2.txt";
+            var relativePath = "logBroom1.txt";            
+            fullPath = Path.Combine(appDir, relativePath);  
+            */
+            //Исправила ошибку - работает
+            var relativePath = "logBroom2.txt";
             //var baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             // или
             var baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
