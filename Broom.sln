@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroomGUI", "BroomGUI\BroomGUI.csproj", "{8DEB29C8-622F-4027-8C90-320D67DDB3E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{F7FDE290-91A4-428A-A61F-2945C3A533CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Logger\Logger.csproj", "{F7FDE290-91A4-428A-A61F-2945C3A533CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testLogger", "testLogger\testLogger.csproj", "{C60ADF11-6A1F-4E3F-B399-D8F990DD7B63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testLogger", "testLogger\testLogger.csproj", "{C60ADF11-6A1F-4E3F-B399-D8F990DD7B63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3973409-8D89-4CE3-94C5-B87E40453F5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

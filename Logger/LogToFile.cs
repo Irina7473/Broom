@@ -3,56 +3,51 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Logger
 {
-    public static class LogToFile
+    public class LogToFile
     {
-        //static string fullPath = @"C:\IRINA\STEP\Broom\logBroom.txt";
-        static string fullPath;
-        public static void CreateToFile() // НЕ ПОЛУЧАЕТСЯ - нет доступа
+        private readonly string RegistrationPath;
+        private readonly string SuccessPath;
+        private readonly string ErrorsPath;
+        private readonly string loggerDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BroomLogger");
+        //вариант с расположением журналов в папке исполнительного файла
+        // private readonly string loggerDir=Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"BroomLogger");
+
+        public LogToFile()
         {
-            //Нужно создать папку для журналов,тк их будет много
-            //Исправила ошибку - работает
-            /*
-            var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Console.WriteLine(appDir);
-            var relativePath = "logBroom1.txt";            
-            fullPath = Path.Combine(appDir, relativePath);  
-            */
-            //Исправила ошибку - работает
-            var relativePath = "logBroom2.txt";
-            //var baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            // или
-            var baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            Console.WriteLine(baseFolder);
-            //var appStorageFolder = Path.Combine(baseFolder, "Broom");
-            fullPath = Path.Combine(baseFolder, relativePath);
-            Console.WriteLine(fullPath);
-            
+            Directory.CreateDirectory(loggerDir);  //создается 1 раз при 1 запуске программы
+            RegistrationPath = Path.Combine(loggerDir, "RegistrationLog.txt");  //создается 1 раз при 1 запуске программы
+            var creatTime = DateTime.Now.ToShortDateString();
+            var sLog = "SuccessLog" + creatTime + ".txt";
+            SuccessPath = Path.Combine(loggerDir, sLog); //создается каждый раз при запуске программы
+            var eLog = "ErrorsLog" + creatTime + ".txt";
+            ErrorsPath = Path.Combine(loggerDir, eLog);  //создается каждый раз при запуске программы
+        }
+        
+        public async void RecordEventToFile(string nameFile, string locationFile)
+        {
+            var text = DateTime.Now + " | " + nameFile + " | " + locationFile + " | " + Environment.UserName + " \n";
+            await File.AppendAllTextAsync(SuccessPath, text);
         }
 
-        public static void RecordEventToFile(string dataDelete, string nameFile, string locationFile, string userDelete)
+        public void ClearToFile()
         {
-            var text = dataDelete + " | " + nameFile + " | " + locationFile + " | " + userDelete + " \n";
-            File.AppendAllText(fullPath, text);
-        }
-
-        public static void ClearToFile()
-        {
-            if (File.Exists(fullPath)) File.WriteAllText(fullPath, "");
+            if (File.Exists(SuccessPath)) File.WriteAllText(SuccessPath, "");
             Console.WriteLine("Журнал очищен");
         }
 
-        public static void DeleteToFile()
+        public void DeleteToFile()
         {
-            if (File.Exists(fullPath)) File.Delete(fullPath);
+            if (File.Exists(SuccessPath)) File.Delete(SuccessPath);
             Console.WriteLine("Журнал удален");
         }
 
-        public static void ReadFromFile()
+        public void ReadFromFile()
         {
-            StreamReader reader = new StreamReader(fullPath);
+            StreamReader reader = new StreamReader(SuccessPath);
             Console.WriteLine(reader.ReadToEnd());
             reader.Close();
         }
