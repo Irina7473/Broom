@@ -1,15 +1,18 @@
 ﻿using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
-
-namespace Find_Folders
+namespace TestFindFolders
 {
     public static class DeserializingDataFromFile
     {
-        public static void Deserialize(string filePathToDeserialize, out FindFolders obj)
+        public static async Task<FindFolders> DeserializeAsync(string filePathToDeserialize, FindFolders obj)
         {
-            string json = File.ReadAllText(filePathToDeserialize);
-            obj = JsonSerializer.Deserialize<FindFolders>(json);
+            using (FileStream fs = new FileStream(filePathToDeserialize, FileMode.Open))
+            {
+                obj = await JsonSerializer.DeserializeAsync<FindFolders>(fs);
+            }
+            return obj;
         }
     }
 }
