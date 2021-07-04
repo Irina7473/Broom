@@ -1,85 +1,44 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.Json;
 
-namespace TestFindFolders
+namespace FindFolders
 {
-    public delegate void Message(string str);
-    public class FindFolders
+    public static class FindFolders
     {
         private static string _userName;
-        private string _userPath;
-        public List<string> directory { get; set; }
-        private List<string> _fullDirectory;
-        private List<string> _findDirectory;
+        private static string _userPath;
+        private static List<string> _folders;
+        private static DirectoryList _DirectoryList { get; set; }
+        private const string FILE = "config.json";
+        public static event Message Info;
 
-        public event Message Info;
-        public FindFolders()
+        private static void GetDirectoryList()
         {
+            using FileStream fs = new FileStream(FILE, FileMode.Open);
+            _DirectoryList = JsonSerializer.DeserializeAsync<DirectoryList>(fs).Result;
+        }
+        
+        public static List<string> GetFolders()
+        {
+            _folders = new List<string>();
+
             _userName = Environment.UserName;
-            _userPath = $"C:\\Users\\{_userName}\\";
-            _fullDirectory = new List<string>();
-            _findDirectory = new List<string>();
-        }
+            _userPath = $@"C:\{_userName}\";
 
-        private void CreateFullDirectory()
-        {
-            try
+            GetDirectoryList();
+
+            //TODO Добавить использование журналирования
+            foreach (var dir in _DirectoryList.DList)
             {
-                if (directory.Count > 0)
+                if (Directory.Exists(dir))
                 {
-                    for (int i = 0; i < directory.Count; i++)
-                    {
-                        _fullDirectory.Add(_userPath + directory[i]);
-                    }
-                }
-                else
-                {
-                    throw new Exception("Не загружены директории поиска папок");
+                    _folders.Add(_userPath + dir);
                 }
             }
-            catch (Exception error)
-            {
-                Info?.Invoke(error.Message);
-            }
-
-        }
-
-        public void SearchFolders()
-        {
-            try
-            {
-                CreateFullDirectory();
-                if (_fullDirectory.Count > 0)
-                {
-                    for (int i = 0; i < _fullDirectory.Count; i++)
-                    {
-                        if (Directory.Exists(_fullDirectory[i]))
-                        {
-                            _findDirectory.Add(_fullDirectory[i]);
-                        }
-                    }
-                }
-                else
-                {
-                    throw new Exception("Отсутствуют пути для поиска папок");
-                }
-            }
-            catch (Exception error)
-            {
-                Info?.Invoke(error.Message);
-            }
-
-        }
-
-        public List<string> GetDirectoryForSearch()
-        {
-            return _fullDirectory;
-        }
-
-        public List<string> GetSearchFolders()
-        {
-            return _findDirectory;
+            
+            return _folders;
         }
     }
 }
