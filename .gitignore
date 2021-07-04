@@ -380,6 +380,7 @@ FodyWeavers.xsd
 
 # Local History for Visual Studio Code
 .history/
+.vscode/
 
 # Windows Installer files from build outputs
 *.cab
@@ -393,5 +394,3 @@ FodyWeavers.xsd
 *.sln.iml
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
-
-.idea/
