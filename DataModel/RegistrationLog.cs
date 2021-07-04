@@ -21,36 +21,4 @@ namespace DataModel
 
         public RegistrationLog() { }
     }
-
-    public class SuccessLog
-    {
-        public int Id { get; set; }
-        public int IdRegistration { get; set; }
-        public string SuccessMessage { get; set; }
-        
-        public SuccessLog(int id, int idregistration, string successmessage)
-        {
-            Id = id;
-            IdRegistration = idregistration;
-            SuccessMessage = successmessage;
-        }
-
-        public SuccessLog() { }
-    }
-
-    public class ErrorsLog
-    {
-        public int Id { get; set; }
-        public int IdRegistration { get; set; }
-        public string ErrorsMessage { get; set; }
-
-        public ErrorsLog(int id, int idregistration, string errorsmessage)
-        {
-            Id = id;
-            IdRegistration = idregistration;
-            ErrorsMessage = errorsmessage;
-        }
-
-        public ErrorsLog() { }
-    }
 }
