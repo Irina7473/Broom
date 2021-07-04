@@ -9,14 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Logger\Logger.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testLogger", "testLogger\testLogger.csproj", "{C60ADF11-6A1F-4E3F-B399-D8F990DD7B63}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3973409-8D89-4CE3-94C5-B87E40453F5B}"
-	ProjectSection(SolutionItems) = preProject
-		Logger\CreateTable.sql = Logger\CreateTable.sql
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "connectDB", "connectDB\connectDB.csproj", "{C2F185FA-4DFA-4783-AB63-B8A9CCA86E3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "connectDB", "connectDB\connectDB.csproj", "{C2F185FA-4DFA-4783-AB63-B8A9CCA86E3E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModel", "DataModel\DataModel.csproj", "{FFDAE708-A48E-44E3-A887-EF74D1B6D1BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "DataModel\DataModel.csproj", "{FFDAE708-A48E-44E3-A887-EF74D1B6D1BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@ namespace connectDB
     public class DB
     {
         //не знаю как подключить локальную базу
-            string connectionString = "Data Source=(local); Initial Catalog=BroomLogger;" + "logger_db;";
+            string connectionString = "Data Source=logger_db.sqlite;Mode=ReadWrite;";
 
             private SqlConnection _connection;
             private SqlCommand _query;
