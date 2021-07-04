@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-
 namespace connectDB
 {
     public class DB
@@ -48,10 +47,6 @@ namespace connectDB
                 _query.CommandText = sql;
                 var result = _query.ExecuteReader();
                 return result;
-            }
-        
-            
-                     
+            }                      
         }
     }
-

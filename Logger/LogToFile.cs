@@ -67,5 +67,4 @@ namespace Logger
             reader.Close();
         }
     }
-
 }

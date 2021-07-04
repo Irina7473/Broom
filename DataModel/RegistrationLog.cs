@@ -53,5 +53,4 @@ namespace DataModel
 
         public ErrorsLog() { }
     }
-
 }
