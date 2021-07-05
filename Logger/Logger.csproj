@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="logger_db.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

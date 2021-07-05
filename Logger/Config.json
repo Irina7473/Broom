@@ -1,0 +1,4 @@
+{  
+  "DataSource": "logger_db.sqlite",
+  "Mode": "ReadWrite"
+}

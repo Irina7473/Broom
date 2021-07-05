@@ -20,7 +20,7 @@ namespace connectDB
                 };
             }
 
-            public void Open()
+            private void Open()
             {
                 try
                 {
@@ -37,7 +37,7 @@ namespace connectDB
             }
 
             //TODO Дополнить метод проверками исключений
-            public void Close()
+            private void Close()
             {
                 _connection.Close();
             }

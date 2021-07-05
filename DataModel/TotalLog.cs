@@ -2,23 +2,23 @@
 
 namespace DataModel
 {
-    class ErrorsLog
+    public class TotalLog
     {
         public int Id { get; set; }
         public int IdTypeEvent { get; set; }
         public string DateTimeEvent { get; set; }
         public string User { get; set; }
-        public string ErrorsMessage { get; set; }
+        public string TotalMessage { get; set; }
 
-        public ErrorsLog(int id, int idtypeevent, string datetimeevent, string user, string errorsmessage)
+        public TotalLog(int id, int idtypeevent, string datetimeevent, string user, string totalmessage)
         {
             Id = id;
             IdTypeEvent = idtypeevent;
             DateTimeEvent = datetimeevent;
             User = user;
-            ErrorsMessage = errorsmessage;
+            TotalMessage = totalmessage;
         }
-       
-        public ErrorsLog() { }
+
+        public TotalLog() { }
     }
 }
