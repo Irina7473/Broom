@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+    <Compile Remove="ErrorsLog.cs" />
+    <Compile Remove="SuccessLog.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\connectDB\connectDB.csproj" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.7" />
   </ItemGroup>
 
 </Project>

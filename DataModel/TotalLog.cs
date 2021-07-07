@@ -8,15 +8,15 @@ namespace DataModel
         public int IdTypeEvent { get; set; }
         public string DateTimeEvent { get; set; }
         public string User { get; set; }
-        public string TotalMessage { get; set; }
+        public string Message { get; set; }
 
-        public TotalLog(int id, int idtypeevent, string datetimeevent, string user, string totalmessage)
+        public TotalLog(int id, int idtypeevent, string datetimeevent, string user, string message)
         {
             Id = id;
             IdTypeEvent = idtypeevent;
             DateTimeEvent = datetimeevent;
             User = user;
-            TotalMessage = totalmessage;
+            Message = message;
         }
 
         public TotalLog() { }

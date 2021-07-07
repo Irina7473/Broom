@@ -32,9 +32,7 @@ namespace Logger
             var text = type + " | " + DateTime.Now + " | " + Environment.UserName + " | " +  message + " \n";
             switch (type)
             {
-                case "INFO": 
-                    await File.AppendAllTextAsync(TotalPath, text);
-                    break;
+                case "INFO":                     
                 case "WARN":
                     await File.AppendAllTextAsync(TotalPath, text);
                     break;
@@ -47,7 +45,7 @@ namespace Logger
             }           
         }
                         
-        public async void ReadFromFile()
+        /*public async void ReadFromFile()
         {
             StreamReader readerTotal = new StreamReader(TotalPath);
             Console.WriteLine(await readerTotal.ReadToEndAsync());
@@ -60,6 +58,6 @@ namespace Logger
             StreamReader readerErrors = new StreamReader(ErrorsPath);
             Console.WriteLine(await readerErrors.ReadToEndAsync());
             readerErrors.Close();
-        }
+        }*/
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DataModel
 {
-    class ErrorsLog
+    public class ErrorsLog
     {
         public int Id { get; set; }
         public int IdTypeEvent { get; set; }
