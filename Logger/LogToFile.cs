@@ -44,8 +44,9 @@ namespace Logger
                     break;
             }           
         }
-                        
-        /*public async void ReadFromFile()
+
+        //Выводит данные таблицы в консоль на этапе отладки
+        public async void ReadFromFile()
         {
             StreamReader readerTotal = new StreamReader(TotalPath);
             Console.WriteLine(await readerTotal.ReadToEndAsync());
@@ -58,6 +59,6 @@ namespace Logger
             StreamReader readerErrors = new StreamReader(ErrorsPath);
             Console.WriteLine(await readerErrors.ReadToEndAsync());
             readerErrors.Close();
-        }*/
+        }
     }
 }

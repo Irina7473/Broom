@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Logger
+﻿namespace connectDB
 {
     public class Config
     {
