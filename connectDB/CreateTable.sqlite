@@ -1,19 +1,10 @@
-create table tab_types_of_events
-(
-    id integer not null primary key autoincrement,
-    type_event text not null
-);
 
 create table tab_total_log
 (
     id integer not null primary key autoincrement ,
-    id_type_event integer not null ,
+    type_event text not null ,
     date_time_event text not null,
     user text not null,
     message text not null
 );
 
-INSERT INTO tab_types_of_events (id, type_event) VALUES (1, 'INFO');
-INSERT INTO tab_types_of_events (id, type_event) VALUES (2, 'SUCCESS');
-INSERT INTO tab_types_of_events (id, type_event) VALUES (3, 'WARN');
-INSERT INTO tab_types_of_events (id, type_event) VALUES (4, 'ERROR');
