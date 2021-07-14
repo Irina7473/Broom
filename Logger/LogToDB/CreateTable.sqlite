@@ -1,0 +1,8 @@
+create table tab_total_log
+(
+    id integer not null primary key autoincrement ,
+    type_event text not null ,
+    date_time_event text not null,
+    user text not null,
+    message text not null
+);

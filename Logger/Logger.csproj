@@ -10,15 +10,11 @@
 
   <ItemGroup>
     <None Remove="CreateTable.sql" />
+    <None Remove="LogToDB\logger_db.sqlite" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\connectDB\connectDB.csproj" />
-    <ProjectReference Include="..\DataModel\DataModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
