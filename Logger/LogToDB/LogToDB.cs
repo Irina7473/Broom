@@ -93,5 +93,13 @@ namespace Logger
 
             _connection.Close();
         }
+
+        public void DeleteToDB()
+        {
+            _connection.Open();
+            _query.CommandText = "DELETE FROM tab_total_log";
+            _query.ExecuteNonQuery();
+            _connection.Close();
+        }
     }
 }
