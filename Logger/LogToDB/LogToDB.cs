@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Logger
 {
-    public class LogToDB
+    public class LogToDB: ILogger
     {
         private static FileStream file = new("config.json", FileMode.Open);
         private static Config config = JsonSerializer.DeserializeAsync<Config>(file).Result;
@@ -49,7 +49,59 @@ namespace Logger
             var result = _query.ExecuteReader();
             return result;
         }
+           
+        public void RecordToLog(string typeevent, string message) 
+        {
+            _connection.Open();
+            _query.CommandText = $"INSERT INTO tab_total_log (type_event, date_time_event, user, message)" +
+                    $"VALUES ('{typeevent}', '{DateTime.Now}', '{Environment.UserName}', '{message}')";
+            _query.ExecuteNonQuery();
+            _connection.Close();
+        }
 
+        public void ReadTheLog() 
+        {
+            _connection.Open();
+            var sql = "SELECT * FROM tab_total_log";
+            using var result = SelectQuery(sql);
+
+            if (!result.HasRows)
+            {
+                Console.WriteLine("Нет данных");
+                return;
+            }
+
+            var totals = new List<TotalLog>();
+            while (result.Read())
+            {
+                var total = new TotalLog
+                {
+                    Id = result.GetInt32(0),
+                    TypeEvent = result.GetString(1),
+                    DateTimeEvent = result.GetString(2),
+                    User = result.GetString(3),
+                    Message = result.GetString(4)
+                };
+                totals.Add(total);
+            }
+
+            foreach (var total in totals)
+            {
+                Console.WriteLine($"{total.Id} | {total.TypeEvent} | {total.DateTimeEvent} | {total.User} | {total.Message}");
+            }
+
+            _connection.Close();
+        }
+
+        public void ClearLog()
+        {
+            _connection.Open();
+            _query.CommandText = "DELETE FROM tab_total_log";
+            _query.ExecuteNonQuery();
+            _connection.Close();
+        }
+
+        /*
         public void RecordEventToDB(string typeevent, string message)
         {
             _connection.Open();
@@ -100,6 +152,6 @@ namespace Logger
             _query.CommandText = "DELETE FROM tab_total_log";
             _query.ExecuteNonQuery();
             _connection.Close();
-        }
+        }*/
     }
 }
