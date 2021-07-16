@@ -19,7 +19,6 @@ namespace Logger
             Directory.CreateDirectory(loggerDir);
             //создается 1 раз при 1 запуске программы
             TotalPath = Path.Combine(loggerDir, "TotalLog.log");
-
             //создаются по 1 на каждую текущую дату
             var creatTime = DateTime.Now.ToShortDateString();
             var sLog = "SuccessLog" + "_" + creatTime + ".log";
@@ -78,46 +77,8 @@ namespace Logger
                 File.WriteAllText(TotalPath, null);
                 var directoryInfo = new DirectoryInfo(loggerDir);                 
                 foreach (var file in directoryInfo.GetFiles()) 
-                {
-                    if (file.Name != "TotalLog.log") file.Delete();
-                        
-                }
+                        if (file.Name != "TotalLog.log") file.Delete(); 
             }
         }
-        
-        /*
-        public async void RecordEventToFile(string type, string message)
-        {
-            var text = type + " | " + DateTime.Now + " | " + Environment.UserName + " | " +  message + " \n";
-            switch (type)
-            {
-                case "INFO":                     
-                case "WARN":
-                    await File.AppendAllTextAsync(TotalPath, text);
-                    break;
-                case "SUCCESS":
-                    await File.AppendAllTextAsync(SuccessPath, text);
-                    break;
-                case "ERROR":
-                    await File.AppendAllTextAsync(ErrorsPath, text);
-                    break;
-            }           
-        }
-
-        //Выводит данные таблицы в консоль на этапе отладки
-        public async void ReadFromFile()
-        {
-            StreamReader readerTotal = new StreamReader(TotalPath);
-            Console.WriteLine(await readerTotal.ReadToEndAsync());
-            readerTotal.Close();
-            
-            StreamReader readerSuccess = new StreamReader(SuccessPath);
-            Console.WriteLine(await readerSuccess.ReadToEndAsync());
-            readerSuccess.Close();
-
-            StreamReader readerErrors = new StreamReader(ErrorsPath);
-            Console.WriteLine(await readerErrors.ReadToEndAsync());
-            readerErrors.Close();
-        }*/
     }
 }
