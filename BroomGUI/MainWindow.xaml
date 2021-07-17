@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BroomGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="Очистка мусора BROOM" Height="800" Width="600" ResizeMode="CanMinimize">
+    <Grid Background="#FFE8E3E3">
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Help">
+                <MenuItem Header="О программе"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Label Content="BROOM" HorizontalContentAlignment="Center"
+            HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Height="145" Width="580" Background="White" FontFamily="Segoe Print" FontSize="72" FontStyle="Normal" FontWeight="Bold" IsEnabled="False"/>
+        <TabControl Margin="20,180,20,30">
+            <TabItem Header="Основное" FontSize="14">
+                <Grid Background="#FFF9F6F6">
+                    <Label Content="Выберите что будем чистить" HorizontalAlignment="Left" Margin="25,8,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <Label HorizontalAlignment="Center" Margin="0,41,0,0" VerticalAlignment="Top" Height="429" Width="504" Background="#FFE8E3E3">
+                        <StackPanel x:Name="stackPanel_CheckBoxChoice" Height="319">
+                            <CheckBox x:Name="CheckBox_clealAll"  Height="40" Content="Очистить все" FontSize="14" />
+                            <CheckBox x:Name="CheckBox_temporaryFiles"  Height="40" Content="Временные файлы" FontSize="14" />
+                            <CheckBox x:Name="CheckBox_cacheOpera" Height="40" Content="Кеш Opera" FontSize="14"/>
+                            <CheckBox x:Name="CheckBox_cacheGoogleChrome" Height="40" Content="Кеш Google Chrome" FontSize="14"/>
+                            <CheckBox x:Name="CheckBox_cacheMozillaFirefox" Height="40" Content="Кеш Mozilla Firefox" FontSize="14"/>
+                            <CheckBox x:Name="CheckBox_cacheMicrosoftEdge" Height="40" Content="Кеш Microsoft Edge" FontSize="14"/>
+                            <CheckBox x:Name="CheckBox_downloads" Height="40" Content="Папка загрузка" FontSize="14"/>
+                            <CheckBox x:Name="CheckBox_basket" Height="40" Content="Корзина" FontSize="14"/>
+                        </StackPanel>
+                    </Label>
+                    <Button x:Name="Button_runClear"
+                        Content="Запустить" HorizontalAlignment="Center" Margin="0,489,0,0" VerticalAlignment="Top" Width="145" FontSize="16"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Результат выполнения" FontSize="14">
+                <Grid Background="#FFF9F6F6">
+                    <Border BorderThickness="1" BorderBrush="Black" Margin="24,10,26,45">
+                        <TextBlock x:Name="TextBlock_log" 
+                        HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Height="473" Width="498"/>
+                    </Border>
+                    <Button x:Name="Button_clearLog"
+                        Content="Очистить лог" HorizontalAlignment="Center" Margin="0,489,0,0" VerticalAlignment="Top" Width="145" FontSize="16"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
