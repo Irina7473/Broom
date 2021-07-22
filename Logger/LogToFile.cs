@@ -10,22 +10,42 @@ namespace Logger
         private readonly string TotalPath;
         private readonly string SuccessPath;
         private readonly string ErrorsPath;
-        private readonly string loggerDir=Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"BroomLogger");
+        private readonly string PathLoggerDir=Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"Log");
         //в разработке вариант с config файлом
 
         public LogToFile()
         {
             //создается 1 раз при 1 запуске программы
-            Directory.CreateDirectory(loggerDir);
+            Directory.CreateDirectory(PathLoggerDir);
             //создается 1 раз при 1 запуске программы
-            TotalPath = Path.Combine(loggerDir, "TotalLog.log");
+            TotalPath = Path.Combine(PathLoggerDir, "TotalLog.log");
             //создаются по 1 на каждую текущую дату
             var creatTime = DateTime.Now.ToShortDateString();
             var sLog = "SuccessLog" + "_" + creatTime + ".log";
-            SuccessPath = Path.Combine(loggerDir, sLog); 
+            SuccessPath = Path.Combine(PathLoggerDir, sLog); 
             var eLog = "ErrorsLog" + "_" + creatTime + ".log";
-            ErrorsPath = Path.Combine(loggerDir, eLog);  
-        }        
+            ErrorsPath = Path.Combine(PathLoggerDir, eLog);  
+        }
+
+        public LogToFile(string path)
+        {
+            PathLoggerDir = path;
+            var creatTime = DateTime.Now.ToShortDateString();
+            try
+            {
+                //создается 1 раз при 1 запуске программы
+                TotalPath = Path.Combine(PathLoggerDir, "TotalLog.log");
+                //создаются по 1 на каждую текущую дату      
+                var sLog = "SuccessLog" + "_" + creatTime + ".log";
+                SuccessPath = Path.Combine(PathLoggerDir, sLog);
+                var eLog = "ErrorsLog" + "_" + creatTime + ".log";
+                ErrorsPath = Path.Combine(PathLoggerDir, eLog);
+            }
+            catch
+            {
+                throw new Exception("Путь к месту записи файлов не найден");
+            }            
+        }
 
         public async void RecordToLog(string typeevent, string message) 
         {
@@ -46,36 +66,30 @@ namespace Logger
             }
         }
 
-        public async void ReadTheLog() 
+        public void ReadTheLog() 
         {
-            if (File.Exists(TotalPath))
+            Reader(TotalPath);
+            Reader(SuccessPath);
+            Reader(ErrorsPath);            
+        }
+
+        private async void Reader(string path)
+        {
+            if (File.Exists(path))
             {
-                StreamReader readerTotal = new(TotalPath);
-                Console.WriteLine(await readerTotal.ReadToEndAsync());
-                readerTotal.Close();
+                StreamReader reader = new(path);
+                Console.WriteLine(await reader.ReadToEndAsync());
+                reader.Close();
             }
 
-            if (File.Exists(SuccessPath))
-            {
-                StreamReader readerSuccess = new(SuccessPath);
-                Console.WriteLine(await readerSuccess.ReadToEndAsync());
-                readerSuccess.Close();
-            }
-
-            if (File.Exists(ErrorsPath))
-            {
-                StreamReader readerErrors = new(ErrorsPath);
-                Console.WriteLine(await readerErrors.ReadToEndAsync());
-                readerErrors.Close();
-            }
         }
 
         public void ClearLogr()
         {
-            if (Directory.Exists(loggerDir))
+            if (Directory.Exists(PathLoggerDir))
             {
                 File.WriteAllText(TotalPath, null);
-                var directoryInfo = new DirectoryInfo(loggerDir);                 
+                var directoryInfo = new DirectoryInfo(PathLoggerDir);                 
                 foreach (var file in directoryInfo.GetFiles()) 
                         if (file.Name != "TotalLog.log") file.Delete(); 
             }

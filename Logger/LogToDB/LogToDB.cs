@@ -8,15 +8,24 @@ namespace Logger
 {
     public class LogToDB: ILogger
     {
-        private static FileStream file = new("config.json", FileMode.Open);
-        private static Config config = JsonSerializer.DeserializeAsync<Config>(file).Result;
-        private string connectionString = $"Data Source={config.DataSource};Mode={config.Mode};";
-
-        public SqliteConnection _connection;
-        public SqliteCommand _query;
+        private static FileStream file;
+        private static Config config;
+        private string connectionString;
+        private SqliteConnection _connection;
+        private SqliteCommand _query;
 
         public LogToDB()
         {
+            file = new("config.json", FileMode.Open);
+            config = JsonSerializer.DeserializeAsync<Config>(file).Result;
+            connectionString = $"Data Source={config.DataSource};Mode={config.Mode};";
+            _connection = new SqliteConnection(connectionString);
+            _query = new SqliteCommand { Connection = _connection };
+        }
+
+        public LogToDB(string patch)
+        {
+            connectionString = $"Data Source={patch};Mode=ReadWrite;";            
             _connection = new SqliteConnection(connectionString);
             _query = new SqliteCommand { Connection = _connection };
         }
@@ -26,14 +35,18 @@ namespace Logger
             try
             {
                 _connection.Open();
-            }
+            }            
             catch (InvalidOperationException)
             {
-                throw new Exception("Ошибка открытия БД");
+                throw new Exception("Ошибка открытия базы данных");
             }
             catch (SqliteException)
             {
-                throw new Exception("Подключаемся к уже открытой БД");
+                throw new Exception("Подключаемся к уже открытой базе данных");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Путь к базе данных не найден");
             }
         }
 
@@ -42,18 +55,18 @@ namespace Logger
             _connection.Close();
         }
 
-        public SqliteDataReader SelectQuery(string sql)
+        private SqliteDataReader SelectQuery(string sql)
         {
             _query.CommandText = sql;
             var result = _query.ExecuteReader();
             return result;
         }
            
-        public void RecordToLog(string typeevent, string message) 
+        public void RecordToLog(string typeEvent, string message) 
         {
             _connection.Open();
             _query.CommandText = $"INSERT INTO tab_total_log (type_event, date_time_event, user, message)" +
-                    $"VALUES ('{typeevent}', '{DateTime.Now}', '{Environment.UserName}', '{message}')";
+                    $"VALUES ('{typeEvent}', '{DateTime.Now}', '{Environment.UserName}', '{message}')";
             _query.ExecuteNonQuery();
             _connection.Close();
         }
