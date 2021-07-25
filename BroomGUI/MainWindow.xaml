@@ -19,15 +19,14 @@
                 <Grid Background="#FFF9F6F6">
                     <Label Content="Выберите что будем чистить" HorizontalAlignment="Left" Margin="25,8,0,0" VerticalAlignment="Top" FontSize="14"/>
                     <Label HorizontalAlignment="Center" Margin="0,41,0,0" VerticalAlignment="Top" Height="429" Width="504" Background="#FFE8E3E3">
-                        <StackPanel x:Name="stackPanel_CheckBoxChoice" Height="319">
-                            <CheckBox x:Name="CheckBox_clealAll"  Height="40" Content="Очистить все" FontSize="14" />
-                            <CheckBox x:Name="CheckBox_temporaryFiles"  Height="40" Content="Временные файлы" FontSize="14" />
-                            <CheckBox x:Name="CheckBox_cacheOpera" Height="40" Content="Кеш Opera" FontSize="14"/>
-                            <CheckBox x:Name="CheckBox_cacheGoogleChrome" Height="40" Content="Кеш Google Chrome" FontSize="14"/>
-                            <CheckBox x:Name="CheckBox_cacheMozillaFirefox" Height="40" Content="Кеш Mozilla Firefox" FontSize="14"/>
-                            <CheckBox x:Name="CheckBox_cacheMicrosoftEdge" Height="40" Content="Кеш Microsoft Edge" FontSize="14"/>
-                            <CheckBox x:Name="CheckBox_downloads" Height="40" Content="Папка загрузка" FontSize="14"/>
-                            <CheckBox x:Name="CheckBox_basket" Height="40" Content="Корзина" FontSize="14"/>
+                        <StackPanel x:Name="stackPanel_CheckBoxChoice" Height="419" Width="494">
+                            <ListBox  ItemsSource = "{Binding ListBox_ListData}" Height="421"  >
+                                <ListBox.ItemTemplate>
+                                    <HierarchicalDataTemplate>
+                                        <CheckBox  Content = "{Binding Name}"  IsChecked = "{Binding IsChecked}"/>
+                                    </HierarchicalDataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
                     </Label>
                     <Button x:Name="Button_runClear"
