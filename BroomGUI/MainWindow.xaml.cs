@@ -20,6 +20,9 @@ namespace BroomGUI
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Dictionary<string, string> folders;
+
         public MainWindow()
         {
             InitializeComponent();
