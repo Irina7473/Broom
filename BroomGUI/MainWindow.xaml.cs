@@ -21,11 +21,17 @@ namespace BroomGUI
     public partial class MainWindow : Window
     {
 
-        Dictionary<string, string> folders;
+        Dictionary<string, string> folders = new Dictionary<string, string>
+        {
+            {"a", "as" },
+            {"b", "bs" }
+        };
 
         public MainWindow()
         {
             InitializeComponent();
+
+            ListView_folders.ItemsSource = folders;
         }
     }
 }

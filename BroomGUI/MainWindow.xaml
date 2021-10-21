@@ -36,27 +36,30 @@
                                 HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
                             <Grid Margin="10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="10*"/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                <Label Grid.Row="0" 
                                        Content="Выберите места очистки" VerticalAlignment="Center"/>
-                                <CheckBox Grid.Column="0" Grid.Row="1" Content="Очистить все" 
+                                <CheckBox Grid.Row="1" Content="Очистить все" 
                                           VerticalAlignment="Center"/>
-                                <CheckBox Grid.Column="0" Grid.Row="2" Content="Очистить корзину" 
+                                <CheckBox Grid.Row="2" Content="Очистить корзину" 
                                           VerticalAlignment="Center"/>
+                                <ListView Grid.Row="3"  Name="ListView_folders">
+                                    <ListView.ItemTemplate>
+                                        <HierarchicalDataTemplate>
+                                            <CheckBox  Content = "{Binding Key}"  IsChecked = "{Binding IsChecked}"/>
+                                        </HierarchicalDataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
 
                             </Grid>
                         </Border>
                     </DockPanel>
-
                 </TabItem >
                 <TabItem Header = "Результат выполнения" FontSize = "15" >
                     <DockPanel Background="AliceBlue">
