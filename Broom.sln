@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroomGUI", "BroomGUI\BroomG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindFolders", "FindFolders\FindFolders.csproj", "{D8692E43-8458-43A9-9134-BE63AC4AC5EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TESTConsoleApp", "TESTConsoleApp\TESTConsoleApp.csproj", "{C888EA48-8CF1-48CD-B774-27AB562F40AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8692E43-8458-43A9-9134-BE63AC4AC5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C888EA48-8CF1-48CD-B774-27AB562F40AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C888EA48-8CF1-48CD-B774-27AB562F40AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C888EA48-8CF1-48CD-B774-27AB562F40AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C888EA48-8CF1-48CD-B774-27AB562F40AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
