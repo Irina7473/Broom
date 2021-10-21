@@ -5,8 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BroomGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Очистка мусора BROOM" Height="800" Width="600" ResizeMode="CanMinimize">
+    <Grid Background="Lavender">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Height="25">
+                <MenuItem Header="Help">
+                    <MenuItem Header="О программе"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Border DockPanel.Dock="Top" BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                <TextBlock Text="BROOM" 
+                   Background="White" Margin="10" TextAlignment="Center"
+                   Height="110" FontFamily="Segoe Print" FontSize="60" FontStyle="Normal" FontWeight="Bold">
+                </TextBlock>
+            </Border>
+            <StatusBar Name="sbar" DockPanel.Dock="Bottom" 
+                   Background="Lavender" Margin="10" >
+                <StatusBarItem>
+                    <ProgressBar Minimum="0" Maximum="100" Height="25" Width="500"/>
+                </StatusBarItem>
+                <StatusBarItem >
 
+                </StatusBarItem>
+            </StatusBar>
+            <TabControl Margin="10">
+                <TabItem Header = "Основное" FontSize = "15" >
+                    <DockPanel Background="AliceBlue">
+                        <Button x:Name = "Button_startCleaning" Content = "Начать очистку" 
+                                DockPanel.Dock="Bottom" Margin="10"
+                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                            <Grid Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="10*"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" 
+                                       Content="Выберите места очистки" VerticalAlignment="Center"/>
+                                <CheckBox Grid.Row="1" Content="Очистить все" 
+                                          VerticalAlignment="Center"/>
+                                <CheckBox Grid.Row="2" Content="Очистить корзину" 
+                                          VerticalAlignment="Center"/>
+                                <ListView Grid.Row="3"  Name="ListView_folders">
+                                    <ListView.ItemTemplate>
+                                        <HierarchicalDataTemplate>
+                                            <CheckBox  Content = "{Binding Key}"  IsChecked = "{Binding IsChecked}"/>
+                                        </HierarchicalDataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+
+                            </Grid>
+                        </Border>
+                    </DockPanel>
+                </TabItem >
+                <TabItem Header = "Результат выполнения" FontSize = "15" >
+                    <DockPanel Background="AliceBlue">
+                        <Button x:Name = "Button_clearLog" Content = "Очистить лог" 
+                                DockPanel.Dock="Bottom" Margin="10"
+                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                            <TextBlock x:Name = "TextBlock_log" Margin="20"/>
+                        </Border>
+                    </DockPanel>
+                </TabItem >
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>
