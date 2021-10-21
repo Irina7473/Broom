@@ -6,43 +6,69 @@
         xmlns:local="clr-namespace:BroomGUI"
         mc:Ignorable="d"
         Title="Очистка мусора BROOM" Height="800" Width="600" ResizeMode="CanMinimize">
-    <Grid Background="#FFE8E3E3">
-        <Menu Height="25" VerticalAlignment="Top">
-            <MenuItem Header="Help">
-                <MenuItem Header="О программе"></MenuItem>
-            </MenuItem>
-        </Menu>
-        <Label Content="BROOM" HorizontalContentAlignment="Center"
-            HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Height="145" Width="580" Background="White" FontFamily="Segoe Print" FontSize="72" FontStyle="Normal" FontWeight="Bold" IsEnabled="False"/>
-        <TabControl Margin="20,180,20,30">
-            <TabItem Header="Основное" FontSize="14">
-                <Grid Background="#FFF9F6F6">
-                    <Label Content="Выберите что будем чистить" HorizontalAlignment="Left" Margin="25,8,0,0" VerticalAlignment="Top" FontSize="14"/>
-                    <Label HorizontalAlignment="Center" Margin="0,41,0,0" VerticalAlignment="Top" Height="429" Width="504" Background="#FFE8E3E3">
-                        <StackPanel x:Name="stackPanel_CheckBoxChoice" Height="419" Width="494">
-                            <ListBox  ItemsSource = "{Binding ListBox_ListData}" Height="421"  >
-                                <ListBox.ItemTemplate>
-                                    <HierarchicalDataTemplate>
-                                        <CheckBox  Content = "{Binding Name}"  IsChecked = "{Binding IsChecked}"/>
-                                    </HierarchicalDataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
-                    </Label>
-                    <Button x:Name="Button_runClear"
-                        Content="Запустить" HorizontalAlignment="Center" Margin="0,489,0,0" VerticalAlignment="Top" Width="145" FontSize="16"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Результат выполнения" FontSize="14">
-                <Grid Background="#FFF9F6F6">
-                    <Border BorderThickness="1" BorderBrush="Black" Margin="24,10,26,45">
-                        <TextBlock x:Name="TextBlock_log" 
-                        HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Height="473" Width="498"/>
-                    </Border>
-                    <Button x:Name="Button_clearLog"
-                        Content="Очистить лог" HorizontalAlignment="Center" Margin="0,489,0,0" VerticalAlignment="Top" Width="145" FontSize="16"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
+    <Grid Background="Lavender">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Height="25">
+                <MenuItem Header="Help">
+                    <MenuItem Header="О программе"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Border DockPanel.Dock="Top" BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                <TextBlock Text="BROOM" 
+                   Background="White" Margin="10" TextAlignment="Center"
+                   Height="110" FontFamily="Segoe Print" FontSize="60" FontStyle="Normal" FontWeight="Bold">
+                </TextBlock>
+            </Border>
+            <StatusBar Name="sbar" DockPanel.Dock="Bottom" 
+                   Background="Lavender" Margin="10" >
+                <StatusBarItem>
+                    <ProgressBar Minimum="0" Maximum="100" Height="25" Width="500"/>
+                </StatusBarItem>
+                <StatusBarItem >
+
+                </StatusBarItem>
+            </StatusBar>
+            <TabControl Margin="10">
+                <TabItem Header = "Основное" FontSize = "15" >
+                    <DockPanel Background="AliceBlue">
+                        <Button x:Name = "Button_startCleaning" Content = "Начать очистку" 
+                                DockPanel.Dock="Bottom" Margin="10"
+                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="10*"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                       Content="Выберите места очистки" VerticalAlignment="Center"/>
+                                <CheckBox Grid.Column="0" Grid.Row="1" Content="Очистить все" 
+                                          VerticalAlignment="Center"/>
+                                <CheckBox Grid.Column="0" Grid.Row="2" Content="Очистить корзину" 
+                                          VerticalAlignment="Center"/>
+
+                            </Grid>
+                        </Border>
+                    </DockPanel>
+
+                </TabItem >
+                <TabItem Header = "Результат выполнения" FontSize = "15" >
+                    <DockPanel Background="AliceBlue">
+                        <Button x:Name = "Button_clearLog" Content = "Очистить лог" 
+                                DockPanel.Dock="Bottom" Margin="10"
+                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                            <TextBlock x:Name = "TextBlock_log" Margin="20"/>
+                        </Border>
+                    </DockPanel>
+                </TabItem >
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>
