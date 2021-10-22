@@ -22,7 +22,7 @@ namespace BroomGUI
     public partial class MainWindow : Window
     {
 
-        Dictionary<string, string> folders = SetFolders.GetDirectorySet();        
+        Dictionary<string, string> folders = ReadPaths.GetDirectorySet();        
 
         public MainWindow()
         {

@@ -53,7 +53,7 @@
                                         <HierarchicalDataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <CheckBox  Content = "{Binding Key}"  IsChecked = "{Binding IsChecked}" Width="250" Margin="5"/>
-                                                <TextBlock Text="{Binding Key}" Width="250" Margin="5" />
+                                                <TextBlock Text="{Binding Value}" Width="250" Margin="5" />
                                             </StackPanel>
                                         </HierarchicalDataTemplate>
 
