@@ -26,19 +26,19 @@ namespace TESTConsoleApp
             Console.WriteLine("---------------------------");
 
             foreach (var f in folders)
-            {
-                if (PathCheck(f.Value) != null)
-                {
+            {                
                     Console.WriteLine($"{f.Key} - {f.Value}");
+                    var full= new FindPathsFolders();
                     var remove = new List<string>();
-                    remove = ReadPaths.FillFolders(f.Value, remove);
-                    Console.WriteLine(remove.Count);
-                }
-                //foreach (var r in remove) Console.WriteLine(r);
+                    remove = full.FillFolders(f.Value, remove);
+                Console.WriteLine($"{full.nFiles} - {full.nFolders} - {full.sizeDir/1048576}");
+                    //Console.WriteLine(remove.Count);               
                 Console.WriteLine("---------------------------");
             }
             Console.WriteLine("---------------------------");
             
+
+            /*
             int nFiles = 0;
             int nFolders = 0;
             long sizeDir = 0;
@@ -97,7 +97,7 @@ namespace TESTConsoleApp
                     Console.WriteLine($"{path} не найден");
                     return null; 
                 }
-            }
+            }  */
         }
     }
 }

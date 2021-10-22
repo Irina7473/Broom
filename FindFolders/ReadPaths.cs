@@ -6,8 +6,11 @@ using System.Text.Json.Serialization;
 
 namespace FindFolders
 {
+    public delegate void Message(string message);
     public static class ReadPaths
     {
+        public static Message Info;
+
         private static Dictionary<string, string> Folders { get; set; }
         //private static List<string> RemoveList { get; set; }
         private const string jsonFile = "configIrina.json";        
@@ -31,53 +34,9 @@ namespace FindFolders
             }
             catch
             {
-                Console.WriteLine($"{jsonFile} не найден");
+                Info?.Invoke($"{jsonFile} не найден");                
                 return null;
             }
-        }
-
-
-
-        public static List<string> FillFolders(string path, List<string> RemoveList)
-        {
-            if (Directory.Exists(path))
-            {
-                try
-                {
-                    DirectoryInfo dir = new DirectoryInfo(path);
-
-                    FileInfo[] files = dir.GetFiles();
-                    //nFiles += files.Length;
-                    foreach (var file in files)
-                    {
-                        //sizeDir += file.Length;
-                        RemoveList.Add(file.FullName);
-                    }
-
-                    DirectoryInfo[] folders = dir.GetDirectories();
-                    //nFolders += folders.Length;
-                    foreach (var folder in folders)
-                    {
-                        RemoveList.Add(folder.FullName);
-                        FillFolders(folder.FullName, RemoveList);
-                    }
-                }
-                catch { Console.WriteLine($"Нет доступа к папке {path}"); }
-            }
-            else Console.WriteLine($"{path} не найден");
-            return RemoveList;
-        }
-
-
-
-        //Проверка пути
-        private static string PathCheck(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                return null;
-            }
-            return path;
         }
     }
 }
