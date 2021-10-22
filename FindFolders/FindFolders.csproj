@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="configIrina.json">
+    <None Remove="configIrina.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="configIrina.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
 </Project>

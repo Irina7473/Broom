@@ -13,8 +13,74 @@ namespace TESTConsoleApp
     {
         static void Main(string[] args)
         {
+            string P = @"C:\Users\IrinaS\AppData\Local\Temp";
+            Console.WriteLine(P);
+            DateTime dt = Directory.GetCreationTime(P);
+            Console.WriteLine(dt);
+            Console.WriteLine("---------------------------");
+
+
             Dictionary<string, string> folders = SetFolders.GetDirectorySet();
             foreach (var f in folders) Console.WriteLine($"{f.Key} - {f.Value}");
+            Console.WriteLine("---------------------------");
+            foreach (var f in folders)
+            {
+                Console.WriteLine($"{f.Key} - {f.Value}");
+                var remove = new List<string>();
+                remove= SetFolders.FillFolders(f.Value, remove);
+                Console.WriteLine(remove.Count);
+                //foreach (var r in remove) Console.WriteLine(r);
+                Console.WriteLine("---------------------------");
+            }
+
+            Console.WriteLine("---------------------------");
+
+
+
+
+
+            int nFiles = 0;
+            int nFolders = 0;
+            long sizeDir = 0;
+
+            foreach (var f in folders)
+            {
+                nFiles = 0;
+                nFolders = 0;
+                sizeDir = 0;
+                Console.WriteLine(f.Value);
+                FillFolders(f.Value);
+                sizeDir /= 1048576;
+                Console.WriteLine($"{nFiles} - {nFolders} - {sizeDir}");
+                Console.WriteLine("---------------------------");
+            }
+
+
+            void FillFolders(string path)
+            {
+                if (Directory.Exists(path))
+                {
+                    DirectoryInfo dir = new DirectoryInfo(path);
+
+                    FileInfo[] files = dir.GetFiles();
+                    nFiles += files.Length;
+                    foreach (var file in files) sizeDir += file.Length;
+                    
+                    DirectoryInfo[] folders = dir.GetDirectories();
+                    nFolders += folders.Length;
+                    foreach (var folder in folders) FillFolders(folder.FullName);
+                }
+                else Console.WriteLine($"{path} не найден");
+            }
+            //Проверка пути
+            string PathCheck(string path)
+            {
+                if (!Directory.Exists(path))
+                {
+                    return null;
+                }
+                return path;
+            }
         }
     }
 }

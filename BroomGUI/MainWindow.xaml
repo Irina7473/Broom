@@ -48,11 +48,15 @@
                                           VerticalAlignment="Center"/>
                                 <CheckBox Grid.Row="2" Content="Очистить корзину" 
                                           VerticalAlignment="Center"/>
-                                <ListView Grid.Row="3"  Name="ListView_folders">
+                                <ListView Grid.Row="3"  Name="ListView_folders">                                    
                                     <ListView.ItemTemplate>
                                         <HierarchicalDataTemplate>
-                                            <CheckBox  Content = "{Binding Key}"  IsChecked = "{Binding IsChecked}"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox  Content = "{Binding Key}"  IsChecked = "{Binding IsChecked}" Width="250" Margin="5"/>
+                                                <TextBlock Text="{Binding Key}" Width="250" Margin="5" />
+                                            </StackPanel>
                                         </HierarchicalDataTemplate>
+
                                     </ListView.ItemTemplate>
                                 </ListView>
 

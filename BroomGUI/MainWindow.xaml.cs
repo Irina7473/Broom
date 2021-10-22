@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FindFolders;
 
 namespace BroomGUI
 {
@@ -21,11 +22,7 @@ namespace BroomGUI
     public partial class MainWindow : Window
     {
 
-        Dictionary<string, string> folders = new Dictionary<string, string>
-        {
-            {"a", "as" },
-            {"b", "bs" }
-        };
+        Dictionary<string, string> folders = SetFolders.GetDirectorySet();        
 
         public MainWindow()
         {

@@ -1,6 +1,6 @@
 {
-    "Temporary files Windows": "%systeroot%\\Temp",
-    "Temporary files user": "%homepath%\\AppData\\Local\\Temp",
+    "Temporary files Windows": "Temp",
+    "Temporary files user": "AppData\\Local\\Temp",
     "Temporary files Microsoft Edge": "%homepath%\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Cache",
     "Temporary files Gogle Chrome": "%homepath%\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Cache",
     "Temporary files Opera": "%homepath%\\AppData\\Local\\Opera Software\\Opera Stable\\Cache",

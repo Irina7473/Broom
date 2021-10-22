@@ -9,4 +9,10 @@
     <ProjectReference Include="..\FindFolders\FindFolders.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="configIrina.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
