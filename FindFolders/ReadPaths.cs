@@ -11,9 +11,9 @@ namespace FindFolders
     {
         public static Message Info;
 
-        private static Dictionary<string, string> Folders { get; set; }
+        //private static Dictionary<string, string> Folders { get; set; }
         //private static List<string> RemoveList { get; set; }
-        private const string jsonFile = "configIrina.json";        
+        private const string jsonFile = "configIrina.json";  
         // public static event Message Info;
 
         public static Dictionary<string, string> GetDirectorySet()

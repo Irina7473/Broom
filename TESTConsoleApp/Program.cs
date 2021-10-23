@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -20,7 +21,7 @@ namespace TESTConsoleApp
             Console.WriteLine(dt);
             Console.WriteLine("---------------------------");
             */
-
+            /*
             Dictionary<string, string> folders = ReadPaths.GetDirectorySet();
             foreach (var f in folders) Console.WriteLine($"{f.Key} - {f.Value}");
             Console.WriteLine("---------------------------");
@@ -36,7 +37,14 @@ namespace TESTConsoleApp
                 Console.WriteLine("---------------------------");
             }
             Console.WriteLine("---------------------------");
-            
+            */
+
+            ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
+            foreach (var f in removeList)
+            {
+                Console.WriteLine($"{f.name} - {f.nFiles} файлов - {f.nFolders} папок - {f.sizeDir / 1048576}Мб");
+
+            }
 
             /*
             int nFiles = 0;

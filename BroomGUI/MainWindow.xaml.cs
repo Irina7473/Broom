@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,15 @@ namespace BroomGUI
     public partial class MainWindow : Window
     {
 
-        Dictionary<string, string> folders = ReadPaths.GetDirectorySet();        
+        //Dictionary<string, string> pathFolders = ReadPaths.GetDirectorySet();
+        ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            ListView_folders.ItemsSource = folders;
+            //ListView_folders.ItemsSource = pathFolders;
+            ListView_folders.ItemsSource = removeList;
         }
     }
 }

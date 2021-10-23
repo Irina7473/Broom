@@ -19,6 +19,8 @@
                    Height="110" FontFamily="Segoe Print" FontSize="60" FontStyle="Normal" FontWeight="Bold">
                 </TextBlock>
             </Border>
+            
+            
             <StatusBar Name="sbar" DockPanel.Dock="Bottom" 
                    Background="Lavender" Margin="10" >
                 <StatusBarItem>
@@ -28,9 +30,11 @@
 
                 </StatusBarItem>
             </StatusBar>
+            
+            
             <TabControl Margin="10">
-                <TabItem Header = "Основное" FontSize = "15" >
-                    <DockPanel Background="AliceBlue">
+                <TabItem Header = "Основное" FontSize = "12" >
+                    <DockPanel Background="GhostWhite">
                         <Button x:Name = "Button_startCleaning" Content = "Начать очистку" 
                                 DockPanel.Dock="Bottom" Margin="10"
                                 HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
@@ -50,23 +54,28 @@
                                           VerticalAlignment="Center"/>
                                 <ListView Grid.Row="3"  Name="ListView_folders">                                    
                                     <ListView.ItemTemplate>
-                                        <HierarchicalDataTemplate>
+                                        <DataTemplate DataType="FindPathsFolders" > 
                                             <StackPanel Orientation="Horizontal">
-                                                <CheckBox  Content = "{Binding Key}"  IsChecked = "{Binding IsChecked}" Width="250" Margin="5"/>
-                                                <TextBlock Text="{Binding Value}" Width="250" Margin="5" />
+                                                <CheckBox  Content = "{Binding name}"  IsChecked = "{Binding IsChecked}" Width="230" Margin="5"/>
+                                                <TextBlock Width="300" Margin="5">
+                                                    <Run Text="Найдено "/>
+                                                    <Run Text="{Binding nFiles}"/>
+                                                    <Run Text=" файлов, "/>
+                                                    <Run Text="{Binding nFolders}"/>
+                                                    <Run Text=" папок, "/>
+                                                    <Run Text="{Binding sizeDir}"/>
+                                                    <Run Text="Мб"/>
+                                                </TextBlock>
                                             </StackPanel>
-                                        </HierarchicalDataTemplate>
-
+                                        </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
-
-
                             </Grid>
                         </Border>
                     </DockPanel>
                 </TabItem >
-                <TabItem Header = "Результат выполнения" FontSize = "15" >
-                    <DockPanel Background="AliceBlue">
+                <TabItem Header = "Результат выполнения" FontSize = "12" >
+                    <DockPanel Background="GhostWhite">
                         <Button x:Name = "Button_clearLog" Content = "Очистить лог" 
                                 DockPanel.Dock="Bottom" Margin="10"
                                 HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
