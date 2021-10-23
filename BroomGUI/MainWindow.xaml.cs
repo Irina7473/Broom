@@ -22,16 +22,18 @@ namespace BroomGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        //Dictionary<string, string> pathFolders = ReadPaths.GetDirectorySet();
         ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //ListView_folders.ItemsSource = pathFolders;
             ListView_folders.ItemsSource = removeList;
+        }
+
+        private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

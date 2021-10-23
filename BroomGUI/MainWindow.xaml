@@ -18,8 +18,7 @@
                    Background="White" Margin="10" TextAlignment="Center"
                    Height="110" FontFamily="Segoe Print" FontSize="60" FontStyle="Normal" FontWeight="Bold">
                 </TextBlock>
-            </Border>
-            
+            </Border>       
             
             <StatusBar Name="sbar" DockPanel.Dock="Bottom" 
                    Background="Lavender" Margin="10" >
@@ -29,15 +28,15 @@
                 <StatusBarItem >
 
                 </StatusBarItem>
-            </StatusBar>
-            
+            </StatusBar>            
             
             <TabControl Margin="10">
                 <TabItem Header = "Основное" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
                         <Button x:Name = "Button_startCleaning" Content = "Начать очистку" 
-                                DockPanel.Dock="Bottom" Margin="10"
-                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                                Click="Button_startCleaning_Click"
+                                DockPanel.Dock="Bottom" Margin="10" HorizontalAlignment = "Center" 
+                                Width = "150" FontSize = "15" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>
@@ -47,17 +46,19 @@
                                     <RowDefinition Height="10*"/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" 
-                                       Content="Выберите места очистки" VerticalAlignment="Center"/>
+                                       Content="Выберите места очистки" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
                                 <CheckBox Grid.Row="1" Content="Очистить все" 
-                                          VerticalAlignment="Center"/>
+                                          VerticalAlignment="Center" Margin="12,0,0,0" />
                                 <CheckBox Grid.Row="2" Content="Очистить корзину" 
-                                          VerticalAlignment="Center"/>
-                                <ListView Grid.Row="3"  Name="ListView_folders">                                    
+                                          VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                <ListView Grid.Row="3"  Name="ListView_folders" Background="GhostWhite" BorderThickness="0">                                    
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="FindPathsFolders" > 
                                             <StackPanel Orientation="Horizontal">
-                                                <CheckBox  Content = "{Binding name}"  IsChecked = "{Binding IsChecked}" Width="230" Margin="5"/>
-                                                <TextBlock Width="300" Margin="5">
+                                                <CheckBox  x:Name="CheckBox_select" Content = "{Binding name}"  
+                                                           IsChecked = "{Binding IsChecked}" 
+                                                           Width="200" Margin="5,5,0,0"/>
+                                                <TextBlock Width="300" Margin="10,5,0,0">
                                                     <Run Text="Найдено "/>
                                                     <Run Text="{Binding nFiles}"/>
                                                     <Run Text=" файлов, "/>
