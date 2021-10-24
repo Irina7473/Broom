@@ -395,4 +395,8 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
 
+
+testLogger/
+
 TestFind/
+
