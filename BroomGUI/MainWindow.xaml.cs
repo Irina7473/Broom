@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FindFolders;
 
 namespace BroomGUI
 {
@@ -20,9 +22,18 @@ namespace BroomGUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            ListView_folders.ItemsSource = removeList;
+        }
+
+        private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,0 +1,9 @@
+{
+  "Temporary files Windows": "C:\\Windows\\Temp",
+  "Temporary files user": "%HOMEPATH%\\AppData\\Local\\Temp",
+  "Temporary files Microsoft Edge": "%HOMEPATH%\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Cache",
+  "Temporary files Gogle Chrome": "%homepath%\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Cache",
+  "Temporary files Opera": "%homepath%\\AppData\\Local\\Opera Software\\Opera Stable\\Cache",
+  "Temporary files Yandex": "%homepath%\\AppData\\Local\\Yandex\\YandexBrowser\\User Data\\Default\\Cache",
+  "Temporary files Mozilla": "%homepath%\\AppData\\Local\\Mozilla\\Firefox\\Profiles\\PROF.default\\cache2\\entries"
+}
