@@ -57,9 +57,7 @@ namespace FindFolders
                 Info?.Invoke($"{path} не найден");
                 Console.WriteLine($"{path} не найден");
             }
-            SizeDir= (double)(SizeDir /= 1048576);
-            SizeDir = Math.Round(SizeDir, 1);
-
+            
             return RemoveList;
         }
     }
@@ -78,6 +76,7 @@ namespace FindFolders
                 var remove = new List<string>();
                 remove = full.FillFolders(f.Value, remove);
                 full.RemoveList = remove;
+                full.SizeDir= Math.Round(full.SizeDir/1048576, 1);
                 RemoveCollection.Add(full);
             }
             return RemoveCollection;

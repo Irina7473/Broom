@@ -43,7 +43,7 @@ namespace TESTConsoleApp
             foreach (var f in removeList)
             {
                 
-                Console.WriteLine($"{f.Name} - {f.NFiles} файлов - {f.NFolders} папок - {f.SizeDir}Мб");
+                Console.WriteLine($"{f.Name} - {f.NFiles} файлов - {f.NFolders} папок - {f.SizeDir} Мб");
 
             }
             Console.WriteLine("---------------------------");
