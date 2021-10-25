@@ -42,11 +42,17 @@ namespace TESTConsoleApp
             ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
             foreach (var f in removeList)
             {
-                Console.WriteLine($"{f.name} - {f.nFiles} файлов - {f.nFolders} папок - {f.sizeDir / 1048576}Мб");
+                
+                Console.WriteLine($"{f.Name} - {f.NFiles} файлов - {f.NFolders} папок - {f.SizeDir}Мб");
 
             }
+            Console.WriteLine("---------------------------");
 
-            /*
+
+            Dictionary<string, string> folders = ReadPaths.GetDirectorySet();
+            foreach (var f in folders) Console.WriteLine($"{f.Key} - {f.Value}");
+            Console.WriteLine("---------------------------");
+            
             int nFiles = 0;
             int nFolders = 0;
             long sizeDir = 0;
@@ -105,7 +111,7 @@ namespace TESTConsoleApp
                     Console.WriteLine($"{path} не найден");
                     return null; 
                 }
-            }  */
+            }  
         }
     }
 }

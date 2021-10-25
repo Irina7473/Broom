@@ -55,16 +55,16 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="FindPathsFolders" > 
                                             <StackPanel Orientation="Horizontal">
-                                                <CheckBox  x:Name="CheckBox_select" Content = "{Binding name}"  
+                                                <CheckBox  x:Name="CheckBox_select" Content = "{Binding Name}"  
                                                            IsChecked = "{Binding IsChecked}" 
                                                            Width="200" Margin="5,5,0,0"/>
                                                 <TextBlock Width="300" Margin="10,5,0,0">
                                                     <Run Text="Найдено "/>
-                                                    <Run Text="{Binding nFiles}"/>
+                                                    <Run Text="{Binding NFiles}"/>
                                                     <Run Text=" файлов, "/>
-                                                    <Run Text="{Binding nFolders}"/>
+                                                    <Run Text="{Binding NFolders}"/>
                                                     <Run Text=" папок, "/>
-                                                    <Run Text="{Binding sizeDir}"/>
+                                                    <Run Text="{Binding SizeDir}"/>
                                                     <Run Text="Мб"/>
                                                 </TextBlock>
                                             </StackPanel>

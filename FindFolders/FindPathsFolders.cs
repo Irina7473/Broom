@@ -10,12 +10,15 @@ namespace FindFolders
     public class FindPathsFolders
     {
         public Message Info;
-        public string name { get; set; }
-        public string path { get; set; }
+        public string Name { get; set; }
+        public string Path { get; set; }
         public List<string> RemoveList { get; set; }
-        public long nFiles { get; set; }
-        public long nFolders { get; set; }
-        public long sizeDir { get; set; }
+        //public int nFiles = 0;
+        public int NFiles { get; set; }
+        //public int nFolders = 0;
+        public int NFolders { get; set; }
+        //public long sizeDir = 0;
+        public double SizeDir { get; set; }
 
         public FindPathsFolders() { }
         
@@ -28,18 +31,18 @@ namespace FindFolders
                     DirectoryInfo dir = new DirectoryInfo(path);
 
                     FileInfo[] files = dir.GetFiles();
-                    nFiles += files.Length;
+                    NFiles += files.Length;
                     foreach (var file in files)
                     {
-                        sizeDir += file.Length;
+                        SizeDir += file.Length;
                         RemoveList.Add(file.FullName);
                     }
 
                     DirectoryInfo[] folders = dir.GetDirectories();
-                    nFolders += folders.Length;
+                    NFolders += folders.Length;
                     foreach (var folder in folders)
                     {
-                        RemoveList.Add(folder.FullName);
+                        //RemoveList.Add(folder.FullName);
                         FillFolders(folder.FullName, RemoveList);
                     }
                 }
@@ -54,7 +57,9 @@ namespace FindFolders
                 Info?.Invoke($"{path} не найден");
                 Console.WriteLine($"{path} не найден");
             }
-            sizeDir /= 1048576;
+            SizeDir= (double)(SizeDir /= 1048576);
+            SizeDir = Math.Round(SizeDir, 1);
+
             return RemoveList;
         }
     }
@@ -68,8 +73,8 @@ namespace FindFolders
             foreach (var f in folders)
             {
                 var full = new FindPathsFolders();
-                full.name = f.Key;
-                full.path = f.Value;
+                full.Name = f.Key;
+                full.Path = f.Value;
                 var remove = new List<string>();
                 remove = full.FillFolders(f.Value, remove);
                 full.RemoveList = remove;
