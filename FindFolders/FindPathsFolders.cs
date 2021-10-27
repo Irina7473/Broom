@@ -11,18 +11,14 @@ namespace FindFolders
     {
         public Message Info;
         public string Name { get; set; }
-        public string Path { get; set; }
-        public List<string> RemoveList { get; set; }
-        //public int nFiles = 0;
-        public int NFiles { get; set; }
-        //public int nFolders = 0;
+        public string Path { get; set; }        
+        public int NFiles { get; set; }       
         public int NFolders { get; set; }
-        //public long sizeDir = 0;
         public double SizeDir { get; set; }
 
         public FindPathsFolders() { }
         
-        public List<string> FillFolders(string path, List<string> RemoveList)
+        public void FillFolders(string path)
         {
             if (Directory.Exists(path))
             {
@@ -32,19 +28,11 @@ namespace FindFolders
 
                     FileInfo[] files = dir.GetFiles();
                     NFiles += files.Length;
-                    foreach (var file in files)
-                    {
-                        SizeDir += file.Length;
-                        RemoveList.Add(file.FullName);
-                    }
-
+                    foreach (var file in files) SizeDir += Convert.ToDouble(file.Length);
+                   
                     DirectoryInfo[] folders = dir.GetDirectories();
                     NFolders += folders.Length;
-                    foreach (var folder in folders)
-                    {
-                        //RemoveList.Add(folder.FullName);
-                        FillFolders(folder.FullName, RemoveList);
-                    }
+                    foreach (var folder in folders) FillFolders(folder.FullName);
                 }
                 catch
                 {
@@ -57,8 +45,6 @@ namespace FindFolders
                 Info?.Invoke($"{path} не найден");
                 Console.WriteLine($"{path} не найден");
             }
-            
-            return RemoveList;
         }
     }
     
@@ -73,9 +59,7 @@ namespace FindFolders
                 var full = new FindPathsFolders();
                 full.Name = f.Key;
                 full.Path = f.Value;
-                var remove = new List<string>();
-                remove = full.FillFolders(f.Value, remove);
-                full.RemoveList = remove;
+                full.FillFolders(full.Path);
                 full.SizeDir= Math.Round(full.SizeDir/1048576, 1);
                 RemoveCollection.Add(full);
             }

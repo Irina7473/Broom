@@ -47,16 +47,18 @@
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" 
                                        Content="Выберите места очистки" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
-                                <CheckBox Grid.Row="1" Content="Очистить все" 
+                                <CheckBox Grid.Row="1" x:Name="CheckBox_clearAll" Content="Очистить все" 
+                                          Checked="CheckBox_select_Checked"
                                           VerticalAlignment="Center" Margin="12,0,0,0" />
-                                <CheckBox Grid.Row="2" Content="Очистить корзину" 
+                                <CheckBox Grid.Row="2" x:Name="CheckBox_clearBasket" Content="Очистить корзину" 
+                                          Checked="CheckBox_select_Checked"
                                           VerticalAlignment="Center" Margin="12,0,0,0"/>
-                                <ListView Grid.Row="3"  Name="ListView_folders" Background="GhostWhite" BorderThickness="0">                                    
+                                <ListView Grid.Row="3" x:Name="ListView_folders" Background="GhostWhite" BorderThickness="0">                                    
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="FindPathsFolders" > 
                                             <StackPanel Orientation="Horizontal">
                                                 <CheckBox  x:Name="CheckBox_select" Content = "{Binding Name}"  
-                                                           IsChecked = "{Binding IsChecked}" 
+                                                           Checked="CheckBox_select_Checked"
                                                            Width="200" Margin="5,5,0,0"/>
                                                 <TextBlock Width="300" Margin="10,5,0,0">
                                                     <Run Text="Найдено "/>

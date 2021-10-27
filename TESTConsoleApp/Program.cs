@@ -14,41 +14,14 @@ namespace TESTConsoleApp
     {
         static void Main(string[] args)
         {
-            /*
-            string P = @"C:\Users\IrinaS\AppData\Local\Temp";
-            Console.WriteLine(P);
-            DateTime dt = Directory.GetCreationTime(P);
-            Console.WriteLine(dt);
-            Console.WriteLine("---------------------------");
-            */
-            /*
-            Dictionary<string, string> folders = ReadPaths.GetDirectorySet();
-            foreach (var f in folders) Console.WriteLine($"{f.Key} - {f.Value}");
-            Console.WriteLine("---------------------------");
-
-            foreach (var f in folders)
-            {                
-                    Console.WriteLine($"{f.Key} - {f.Value}");
-                    var full= new FindPathsFolders();
-                    var remove = new List<string>();
-                    remove = full.FillFolders(f.Value, remove);
-                Console.WriteLine($"{full.nFiles} - {full.nFolders} - {full.sizeDir/1048576}");
-                    //Console.WriteLine(remove.Count);               
-                Console.WriteLine("---------------------------");
-            }
-            Console.WriteLine("---------------------------");
-            */
-
+            //Вариант 1
             ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
             foreach (var f in removeList)
-            {
-                
                 Console.WriteLine($"{f.Name} - {f.NFiles} файлов - {f.NFolders} папок - {f.SizeDir} Мб");
-
-            }
             Console.WriteLine("---------------------------");
 
-
+            //Вариант 1
+            /*
             Dictionary<string, string> folders = ReadPaths.GetDirectorySet();
             foreach (var f in folders) Console.WriteLine($"{f.Key} - {f.Value}");
             Console.WriteLine("---------------------------");
@@ -72,7 +45,6 @@ namespace TESTConsoleApp
                 Console.WriteLine("---------------------------");
             }
 
-
             void FillFolders(string path)
             {
                 if (PathCheck(path) != null)
@@ -88,7 +60,6 @@ namespace TESTConsoleApp
                     foreach (var folder in folders) FillFolders(folder.FullName);
                 }
             }
-
 
             //Проверка пути
             string PathCheck(string path)
@@ -111,7 +82,7 @@ namespace TESTConsoleApp
                     Console.WriteLine($"{path} не найден");
                     return null; 
                 }
-            }  
+            }  */
         }
     }
 }
