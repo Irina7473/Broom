@@ -3,7 +3,7 @@
     public interface ILogger
     {
         public void RecordToLog(string typeevent, string message) { }
-        public void ReadTheLog() { }
+        public string ReadTheLog() { return ""; }
         public void ClearLog() { }
     }
 }

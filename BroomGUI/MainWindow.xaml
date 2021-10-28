@@ -79,11 +79,11 @@
                 </TabItem >
                 <TabItem Header = "Результат выполнения" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
-                        <Button x:Name = "Button_clearLog" Content = "Очистить лог" 
+                        <Button x:Name = "Button_clearLog" Content = "Очистить лог" Click="Button_clearLog_Click"
                                 DockPanel.Dock="Bottom" Margin="10"
                                 HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
-                            <TextBlock x:Name = "TextBlock_log" Margin="20"/>
+                            <TextBlock x:Name = "TextBlock_log" Margin="10" TextWrapping="Wrap"/>
                         </Border>
                     </DockPanel>
                 </TabItem >

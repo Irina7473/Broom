@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FindFolders;
+using Logger;
 
 namespace BroomGUI
 {
@@ -25,29 +26,56 @@ namespace BroomGUI
     {
         ObservableCollection<FindPathsFolders> removeList;
         List<string> selectedList;
+        LogToDB log;
 
         public MainWindow()
         {
             InitializeComponent();
-
+            log = new LogToDB();
+            log.RecordToLog("INFO", "Запуск программы.");
+            TextBlock_log.Text = log.ReadTheLog();
+            
             removeList = RemoveList.GetRemoveList();
-            ListView_folders.ItemsSource = removeList;
-            selectedList = new List<string>();
+            if (removeList != null)
+            {
+                log.RecordToLog("INFO", $"Считано {removeList.Count} записей кофигурационного файла.");
+                ListView_folders.ItemsSource = removeList;
+                selectedList = new List<string>();
+            }
+            else
+            {
+                log.RecordToLog("ERROR", ReadPaths.Info.ToString());
+                log.RecordToLog("ERROR", FindPathsFolders.Info.ToString());
+            }
+            TextBlock_log.Text = log.ReadTheLog();
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
         {                       
             foreach (var item in selectedList)
             {
-                MessageBox.Show(item);
-                foreach (var element in removeList)
-                {                    
-                    if (item == element.Name)
-                    {
-                        MessageBox.Show(element.Path);
-                    }
+                if (item == "Очистить все")
+                {
+                    //to do
                 }
+                else if (item == "Очистить корзину")
+                {
+                    //to do
+                }
+                else
+                    foreach (var element in removeList)
+                    {                    
+                        if (item == element.Name)
+                        {
+                            MessageBox.Show(element.Path);                            
+                            element.DeleteSelected(element.Path);                            
+                            FindPathsFolders.Info =msg => log.RecordToLog("INFO", msg);
+                        }
+                    }
             }            
+            TextBlock_log.Text = log.ReadTheLog();
+            //очистить чекбоксы !!            
+            selectedList = new List<string>();            
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)
@@ -56,6 +84,12 @@ namespace BroomGUI
             {
                 selectedList.Add((sender as CheckBox).Content.ToString());
             }            
+        }
+
+        private void Button_clearLog_Click(object sender, RoutedEventArgs e)
+        {
+            log.ClearLog();
+            TextBlock_log.Text = "";
         }
     }
 }

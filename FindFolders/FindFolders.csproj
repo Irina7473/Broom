@@ -5,13 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="configIrina.json" />
+    <None Remove="configPaths.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="configIrina.json">
+    <Content Include="configPaths.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Logger\Logger.csproj" />
   </ItemGroup>
 
 </Project>

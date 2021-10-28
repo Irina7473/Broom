@@ -16,7 +16,7 @@ namespace Logger
 
         public LogToDB()
         {
-            file = new("config.json", FileMode.Open);
+            file = new("configLog.json", FileMode.Open);
             config = JsonSerializer.DeserializeAsync<Config>(file).Result;
             connectionString = $"Data Source={config.DataSource};Mode={config.Mode};";
             _connection = new SqliteConnection(connectionString);
@@ -61,17 +61,17 @@ namespace Logger
             var result = _query.ExecuteReader();
             return result;
         }
-           
-        public void RecordToLog(string typeEvent, string message) 
+
+        public void RecordToLog(string typeEvent, string message)
         {
             _connection.Open();
             _query.CommandText = $"INSERT INTO tab_total_log (type_event, date_time_event, user, message)" +
                     $"VALUES ('{typeEvent}', '{DateTime.Now}', '{Environment.UserName}', '{message}')";
             _query.ExecuteNonQuery();
-            _connection.Close();
+            _connection.Close();            
         }
-
-        public void ReadTheLog() 
+                
+        public string ReadTheLog() 
         {
             _connection.Open();
             var sql = "SELECT * FROM tab_total_log";
@@ -79,27 +79,38 @@ namespace Logger
 
             if (!result.HasRows)
             {
-                Console.WriteLine("Нет данных");
-                return;
+                //Console.WriteLine("Нет данных");
+                return "Нет данных";
             }
-
-            var totals = new List<TotalLog>();
-            while (result.Read())
+            else
             {
-                var total = new TotalLog
+                var totals = new List<TotalLog>();
+                while (result.Read())
                 {
-                    Id = result.GetInt32(0),
-                    TypeEvent = result.GetString(1),
-                    DateTimeEvent = result.GetString(2),
-                    User = result.GetString(3),
-                    Message = result.GetString(4)
-                };
-                totals.Add(total);
-            }
+                    var total = new TotalLog
+                    {
+                        Id = result.GetInt32(0),
+                        TypeEvent = result.GetString(1),
+                        DateTimeEvent = result.GetString(2),
+                        User = result.GetString(3),
+                        Message = result.GetString(4)
+                    };
+                    totals.Add(total);
+                }
+                string log = "";
+                foreach (var total in totals)
+                    log += total.TypeEvent + " " + total.DateTimeEvent + " " 
+                        + total.User + " " + total.Message + "\n";
 
-            foreach (var total in totals)
-                   Console.WriteLine($"{total.Id} | {total.TypeEvent} | {total.DateTimeEvent} | {total.User} | {total.Message}");
-            _connection.Close();
+                return log;
+
+                /*
+                foreach (var total in totals)
+                       Console.WriteLine($"{total.Id} | {total.TypeEvent} | 
+                {total.DateTimeEvent} | {total.User} | {total.Message}");
+                _connection.Close();
+                */
+            }
         }
 
         public void ClearLog()
