@@ -65,11 +65,12 @@ namespace BroomGUI
                 else
                     foreach (var element in removeList)
                     {                    
-                        if (item == element.Name)
+                        if (element.Name == item)
                         {
-                            MessageBox.Show(element.Path);                            
-                            element.DeleteSelected(element.Path);                            
-                            FindPathsFolders.Info =msg => log.RecordToLog("INFO", msg);
+                            MessageBox.Show(element.Path);
+                            log.RecordToLog("INFO", $"Подготовлено к удалению {element.NFiles+element.NFolders} объектов");
+                            DeleteSelected(element.Path, element.Path);                            
+                            //FindPathsFolders.Info =msg => log.RecordToLog("INFO", msg);
                         }
                     }
             }            
@@ -90,6 +91,40 @@ namespace BroomGUI
         {
             log.ClearLog();
             TextBlock_log.Text = "";
+        }
+
+        public void DeleteSelected(string path, string notdelpath)
+        {
+            if (Directory.Exists(path))
+            {
+                try
+                {
+                    int count = 0;
+                    string[] files = Directory.GetFiles(path);
+                    foreach (var file in files)
+                    {
+                        try
+                        {
+                            File.Delete(file);
+                            count++;
+                            log.RecordToLog("SUCCESS", $"Удален {file}");
+                        }
+                        catch { log.RecordToLog("ERROR", $"Нет доступа к {file}"); }
+                    }
+
+                    string[] folders = Directory.GetDirectories(path);
+                    foreach (var folder in folders) DeleteSelected(folder, notdelpath);
+                                        
+                    if (path!= notdelpath && files.Length == 0 && folders.Length == 0)
+                    {
+                        Directory.Delete(path);
+                        count++;
+                    }
+                    log.RecordToLog("SUCCESS", $"Удалено {count} объектов");
+                }
+                catch { log.RecordToLog("WARN", $"Нет доступа к {path}"); }
+            }
+            else { log.RecordToLog("ERROR", $"{path} не найден"); }
         }
     }
 }

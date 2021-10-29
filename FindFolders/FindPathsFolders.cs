@@ -35,20 +35,12 @@ namespace FindFolders
                     NFolders += folders.Length;
                     foreach (var folder in folders) FillFolders(folder.FullName);
                 }
-                catch
-                {
-                    Info?.Invoke($"Нет доступа к папке {path}");
-                    // Console.WriteLine($"Нет доступа к папке {path}");                    
-                }
+                catch { Info?.Invoke($"Нет доступа к папке {path}"); }
             }
-            else
-            {
-                Info?.Invoke($"{path} не найден");
-                //Console.WriteLine($"{path} не найден");                
-            }
+            else { Info?.Invoke($"{path} не найден"); }
         }
-
-        public void DeleteSelected(string path)
+              
+        public void DeleteSelected(string path, string notdelpath)
         {
             if (Directory.Exists(path))
             {
@@ -58,43 +50,30 @@ namespace FindFolders
                     string[] files = Directory.GetFiles(path);
                     foreach (var file in files)
                     {
-                        try 
-                        { 
+                        try
+                        {
                             File.Delete(file);
-                            count++;
+                            count++;                            
                             Info?.Invoke($"Удален {file}");
                         }
-                        catch { 
-                            Info?.Invoke($"Нет доступа к {file}");
-                        }
+                        catch { Info?.Invoke($"Нет доступа к {file}"); }
                     }
 
                     string[] folders = Directory.GetDirectories(path);
-                    foreach (var folder in folders) DeleteSelected(folder);
+                    foreach (var folder in folders) DeleteSelected(folder, notdelpath);
 
-                    /*
-                    if (files.Length == 0 && folders.Length == 0)
+                    if (path != notdelpath && files.Length == 0 && folders.Length == 0)
                     {
                         Directory.Delete(path);
+                        count++;
                     }
-                    */
+                    
                     Info?.Invoke($"Удалено {count} объектов");
-                    //return Info;
                 }
-                catch
-                {
-                    // Console.WriteLine($"Нет доступа к папке {path}");
-                    Info?.Invoke($"Нет доступа к {path}");
-                    //return Info;
-                }
+                catch { Info?.Invoke($"Нет доступа к {path}"); }
             }
-            else
-            {
-                //Console.WriteLine($"{path} не найден");
-                Info?.Invoke($"{path} не найден");
-                //return Info;                
-            }
-        }
+            else { Info?.Invoke($"{path} не найден"); }
+        }   
     }
     
     public static class RemoveList

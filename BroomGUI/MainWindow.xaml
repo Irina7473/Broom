@@ -83,7 +83,9 @@
                                 DockPanel.Dock="Bottom" Margin="10"
                                 HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
-                            <TextBlock x:Name = "TextBlock_log" Margin="10" TextWrapping="Wrap"/>
+                            <ScrollViewer>
+                                <TextBlock x:Name = "TextBlock_log" Margin="10" TextWrapping="Wrap"/>
+                            </ScrollViewer>                            
                         </Border>
                     </DockPanel>
                 </TabItem >
