@@ -34,7 +34,10 @@ namespace BroomGUI
             log = new LogToDB();
             log.RecordToLog("INFO", "Запуск программы.");
             TextBlock_log.Text = log.ReadTheLog();
-            
+            //OutputLog1();
+            //Paragraph_log.Inlines.Add(log.ReadTheLog());
+            OutputLog2();
+
             removeList = RemoveList.GetRemoveList();
             if (removeList != null)
             {
@@ -48,6 +51,10 @@ namespace BroomGUI
                 log.RecordToLog("ERROR", FindPathsFolders.Info.ToString());
             }
             TextBlock_log.Text = log.ReadTheLog();
+            /*
+            Paragraph_log.Inlines.Clear();
+            Paragraph_log.Inlines.Add(log.ReadTheLog());*/
+            OutputLog2();
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
@@ -69,14 +76,18 @@ namespace BroomGUI
                         {
                             MessageBox.Show(element.Path);
                             log.RecordToLog("INFO", $"Подготовлено к удалению {element.NFiles+element.NFolders} объектов");
-                            DeleteSelected(element.Path, element.Path);                            
-                            //FindPathsFolders.Info =msg => log.RecordToLog("INFO", msg);
+                            DeleteSelected(element.Path, element.Path);      
                         }
                     }
-            }            
+            }
             TextBlock_log.Text = log.ReadTheLog();
-            //очистить чекбоксы !!            
-            selectedList = new List<string>();            
+            Paragraph_log.Inlines.Clear();
+            Paragraph_log.Inlines.Add(log.ReadTheLog());
+                        
+            selectedList = new List<string>();
+            removeList.Clear();
+            removeList = RemoveList.GetRemoveList();
+            
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)
@@ -91,6 +102,7 @@ namespace BroomGUI
         {
             log.ClearLog();
             TextBlock_log.Text = "";
+            Paragraph_log.Inlines.Clear();
         }
 
         public void DeleteSelected(string path, string notdelpath)
@@ -126,5 +138,89 @@ namespace BroomGUI
             }
             else { log.RecordToLog("ERROR", $"{path} не найден"); }
         }
+
+        private void OutputLog1()
+        {
+            TextPointer text = TextBlock_log.ContentStart;
+            string typeInfo = "INFO";
+            while (true)
+            {
+                TextPointer next = text.GetNextContextPosition(LogicalDirection.Forward);
+                if (next == null)
+                {
+                    break;
+                }
+                TextRange txt = new TextRange(text, next);
+
+                int indx = txt.Text.IndexOf(typeInfo);
+                if (indx > 0)
+                {
+                    TextPointer sta = text.GetPositionAtOffset(indx);
+                    TextPointer end = text.GetPositionAtOffset(indx + typeInfo.Length);
+                    TextRange textR = new TextRange(sta, end);
+                    textR.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Yellow));
+                }
+                text = next;
+            }
+        }
+
+        
+        private void OutputLog2()
+        {
+            Paragraph_log.Inlines.Clear();            
+            Paragraph_log.Inlines.Add(log.ReadTheLog());
+
+            Paragraph_log.Foreground = new SolidColorBrush(Colors.MediumVioletRed);
+                        
+            TextPointer text = Paragraph_log.ContentStart;            
+            string typeInfo = "INFO";
+            while (text!=null)
+            {
+                TextPointer next = text.GetNextContextPosition(LogicalDirection.Forward);
+                if (next == null)
+                {
+                    break;
+                }
+                TextRange txt = new TextRange(text, next);
+
+                int indx = txt.Text.IndexOf(typeInfo);
+                if (indx > 0)
+                {
+                    TextPointer sta = text.GetPositionAtOffset(indx);
+                    TextPointer end = text.GetPositionAtOffset(indx + typeInfo.Length);
+                    TextRange textR = new TextRange(sta, end);
+                    textR.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Yellow));
+                }
+                text = next;
+            }
+        }
+
+
+        private void SettingColorEvent ( string type)
+        {            
+            TextPointer text = Paragraph_log.ContentStart;
+            while (true)
+            {
+                TextPointer next = text.GetNextContextPosition(LogicalDirection.Forward);
+                if (next == null)
+                {
+                    break;
+                }
+                TextRange txt = new TextRange(text, next);
+
+                int indx = txt.Text.IndexOf(type);
+                if (indx > 0)
+                {
+                    TextPointer sta = text.GetPositionAtOffset(indx);
+                    TextPointer end = text.GetPositionAtOffset(indx + type.Length);
+                    TextRange textR = new TextRange(sta, end);
+                    textR.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Yellow));
+                }
+                text = next;
+            }
+
+            
+        }
+
     }
 }

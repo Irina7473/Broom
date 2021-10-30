@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:BroomGUI"
         mc:Ignorable="d"
         Title="Очистка мусора BROOM" Height="800" Width="600" ResizeMode="CanMinimize">
+    
+    <Window.Resources>
+        <ResourceDictionary Source="Style.xaml"/>
+    </Window.Resources>
+    
     <Grid Background="Lavender">
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="25">
@@ -84,8 +89,24 @@
                                 HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
                             <ScrollViewer>
-                                <TextBlock x:Name = "TextBlock_log" Margin="10" TextWrapping="Wrap"/>
-                            </ScrollViewer>                            
+                                <TextBlock x:Name = "TextBlock_log" Margin="10" TextWrapping="Wrap" />
+                            </ScrollViewer>                              
+                        </Border>                        
+                    </DockPanel>
+                </TabItem >
+                <TabItem Header = "Результат выполнения2" FontSize = "12" >
+                    <DockPanel Background="GhostWhite">
+                        <Button x:Name = "Button_clearLog2" Content = "Очистить лог" Click="Button_clearLog_Click"
+                                DockPanel.Dock="Bottom" Margin="10"
+                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" >
+                            <FlowDocumentReader>
+                                    <FlowDocument>
+                                    <Paragraph  x:Name="Paragraph_log" TextIndent="5" FontSize = "15" Style="{DynamicResource style_Paragraph}">
+                                        <Run></Run>
+                                        </Paragraph>
+                                    </FlowDocument>
+                            </FlowDocumentReader>
                         </Border>
                     </DockPanel>
                 </TabItem >
