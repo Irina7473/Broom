@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using FindFolders;
+using FilesAndFolders;
 
 
 namespace TESTConsoleApp
@@ -15,7 +15,7 @@ namespace TESTConsoleApp
         static void Main(string[] args)
         {
             //Вариант 1
-            ObservableCollection<FindPathsFolders> removeList = RemoveList.GetRemoveList();
+            ObservableCollection<ActionsWithFilesAndFolders> removeList = RemoveList.GetRemoveList();
             foreach (var f in removeList)
                 Console.WriteLine($"{f.Name} - {f.NFiles} файлов - {f.NFolders} папок - {f.SizeDir} Мб");
             Console.WriteLine("---------------------------");

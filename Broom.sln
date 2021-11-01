@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroomGUI", "BroomGUI\BroomG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Logger\Logger.csproj", "{F7FDE290-91A4-428A-A61F-2945C3A533CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindFolders", "FindFolders\FindFolders.csproj", "{D8692E43-8458-43A9-9134-BE63AC4AC5EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilesAndFolders", "FindFolders\FilesAndFolders.csproj", "{D8692E43-8458-43A9-9134-BE63AC4AC5EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TESTConsoleApp", "TESTConsoleApp\TESTConsoleApp.csproj", "{C888EA48-8CF1-48CD-B774-27AB562F40AA}"
 EndProject

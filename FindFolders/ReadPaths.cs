@@ -5,12 +5,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Logger;
 
-namespace FindFolders
+namespace FilesAndFolders
+
 {
-    public delegate void Message(string message);
+    public delegate string Message(string type, string message);
     public static class ReadPaths
     {
-        public static Message Info;
+        public static Message Info;        
         private const string jsonFile = "configPaths.json";
 
         public static Dictionary<string, string> GetDirectorySet()
@@ -26,11 +27,12 @@ namespace FindFolders
                         Folders[key] = Folders[key].Replace("%homepath%", userPath);
                         Folders[key] = Folders[key].Replace("%HOMEPATH%", userPath);
                     }
+                Info?.Invoke("INFO", $"{jsonFile} прочитан");
                 return Folders;
             }
             catch
             {
-                Info?.Invoke($"{jsonFile} не найден");                
+                Info?.Invoke("ERROR", $"{jsonFile} не найден");                
                 return null;
             }
         }

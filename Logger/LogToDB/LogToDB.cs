@@ -62,6 +62,12 @@ namespace Logger
             return result;
         }
 
+        /*
+        public void InfoLog(string message)
+        {
+            RecordToLog("INFO", message);
+        }*/
+
         public void RecordToLog(string typeEvent, string message)
         {
             _connection.Open();

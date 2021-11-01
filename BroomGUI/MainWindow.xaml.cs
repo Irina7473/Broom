@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FindFolders;
+using FilesAndFolders;
 using Logger;
 
 namespace BroomGUI
@@ -24,31 +24,44 @@ namespace BroomGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<FindPathsFolders> removeList;
+        ObservableCollection<ActionsWithFilesAndFolders> removeList;
         List<string> selectedList;
         LogToDB log;
+        Message record;
 
         public MainWindow()
         {
             InitializeComponent();
             log = new LogToDB();
+            /* НЕ РАБОТАЕТ - ОШИБКИ
+            record = log.InfoLog;
+            record += str => { Paragraph_log.Inlines.Add(new Bold (new Run(str))};
+            record?.Invoke("Запуск программы.");
+            */
             log.RecordToLog("INFO", "Запуск программы.");
             TextBlock_log.Text = log.ReadTheLog();
             //OutputLog1();
             //Paragraph_log.Inlines.Add(log.ReadTheLog());
             OutputLog2();
 
-            removeList = RemoveList.GetRemoveList();
+            removeList = RemoveList.GetRemoveList();            
             if (removeList != null)
             {
                 log.RecordToLog("INFO", $"Считано {removeList.Count} записей кофигурационного файла.");
-                ListView_folders.ItemsSource = removeList;
                 selectedList = new List<string>();
+                ListView_folders.ItemsSource = removeList;
+
+                /*
+                foreach (var item in ListView_folders.ItemsSource)
+                {
+                    //if (element.NFiles==0 && element.NFolders==0 && element.SizeDir==0)
+                    if ((item as TextBlock).Text == "Найдено 0 файлов, 0 папок, 0 Мб") (item as CheckBox).IsEnabled = false;
+                }*/                  
             }
             else
             {
                 log.RecordToLog("ERROR", ReadPaths.Info.ToString());
-                log.RecordToLog("ERROR", FindPathsFolders.Info.ToString());
+                log.RecordToLog("ERROR", ActionsWithFilesAndFolders.Info.ToString());
             }
             TextBlock_log.Text = log.ReadTheLog();
             /*
@@ -97,6 +110,14 @@ namespace BroomGUI
                 selectedList.Add((sender as CheckBox).Content.ToString());
             }            
         }
+        private void CheckBox_select_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (((CheckBox)sender).IsChecked == false)
+            {
+                var element=(sender as CheckBox).Content.ToString();
+                selectedList.Remove(element);
+            }
+        }
 
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
@@ -104,6 +125,8 @@ namespace BroomGUI
             TextBlock_log.Text = "";
             Paragraph_log.Inlines.Clear();
         }
+
+
 
         public void DeleteSelected(string path, string notdelpath)
         {
@@ -139,6 +162,8 @@ namespace BroomGUI
             else { log.RecordToLog("ERROR", $"{path} не найден"); }
         }
 
+
+        /*
         private void OutputLog1()
         {
             TextPointer text = TextBlock_log.ContentStart;
@@ -221,6 +246,6 @@ namespace BroomGUI
 
             
         }
-
+        */
     }
 }

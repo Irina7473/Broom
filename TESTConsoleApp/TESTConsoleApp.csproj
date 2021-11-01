@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FindFolders\FindFolders.csproj" />
+    <ProjectReference Include="..\FindFolders\FilesAndFolders.csproj" />
   </ItemGroup>
 
   <ItemGroup>
