@@ -8,10 +8,11 @@ using Logger;
 namespace FilesAndFolders
 
 {
-    public delegate string Message(string type, string message);
+    public delegate void Message(string type, string message);
     public static class ReadPaths
     {
-        public static Message Info;        
+        public static Message Info;
+        
         private const string jsonFile = "configPaths.json";
 
         public static Dictionary<string, string> GetDirectorySet()

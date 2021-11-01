@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.IO;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
@@ -11,8 +11,8 @@ namespace Logger
         private static FileStream file;
         private static Config config;
         private string connectionString;
-        private SqliteConnection _connection;
-        private SqliteCommand _query;
+        private static SqliteConnection _connection;
+        private static SqliteCommand _query;
 
         public LogToDB()
         {
@@ -62,13 +62,7 @@ namespace Logger
             return result;
         }
 
-        /*
-        public void InfoLog(string message)
-        {
-            RecordToLog("INFO", message);
-        }*/
-
-        public void RecordToLog(string typeEvent, string message)
+        public static void RecordToLog(string typeEvent, string message)
         {
             _connection.Open();
             _query.CommandText = $"INSERT INTO tab_total_log (type_event, date_time_event, user, message)" +
@@ -85,7 +79,6 @@ namespace Logger
 
             if (!result.HasRows)
             {
-                //Console.WriteLine("Нет данных");
                 return "Нет данных";
             }
             else
@@ -107,15 +100,7 @@ namespace Logger
                 foreach (var total in totals)
                     log += total.TypeEvent + " " + total.DateTimeEvent + " " 
                         + total.User + " " + total.Message + "\n";
-
                 return log;
-
-                /*
-                foreach (var total in totals)
-                       Console.WriteLine($"{total.Id} | {total.TypeEvent} | 
-                {total.DateTimeEvent} | {total.User} | {total.Message}");
-                _connection.Close();
-                */
             }
         }
 

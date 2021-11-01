@@ -33,21 +33,19 @@ namespace BroomGUI
         {
             InitializeComponent();
             log = new LogToDB();
-            /* НЕ РАБОТАЕТ - ОШИБКИ
-            record = log.InfoLog;
-            record += str => { Paragraph_log.Inlines.Add(new Bold (new Run(str))};
-            record?.Invoke("Запуск программы.");
-            */
-            log.RecordToLog("INFO", "Запуск программы.");
+            record = LogToDB.RecordToLog;
+            //record += str => { Paragraph_log.Inlines.Add(new Run(str)};
+            record?.Invoke("INFO", "Запуск программы.");            
+
             TextBlock_log.Text = log.ReadTheLog();
             //OutputLog1();
-            //Paragraph_log.Inlines.Add(log.ReadTheLog());
-            OutputLog2();
+            Paragraph_log.Inlines.Add(log.ReadTheLog());
+            //OutputLog2();
 
-            removeList = RemoveList.GetRemoveList();            
+            removeList = RemoveList.GetRemoveList();             
             if (removeList != null)
             {
-                log.RecordToLog("INFO", $"Считано {removeList.Count} записей кофигурационного файла.");
+                record?.Invoke("INFO", $"Считано {removeList.Count} записей кофигурационного файла.");
                 selectedList = new List<string>();
                 ListView_folders.ItemsSource = removeList;
 
@@ -55,19 +53,17 @@ namespace BroomGUI
                 foreach (var item in ListView_folders.ItemsSource)
                 {
                     //if (element.NFiles==0 && element.NFolders==0 && element.SizeDir==0)
-                    if ((item as TextBlock).Text == "Найдено 0 файлов, 0 папок, 0 Мб") (item as CheckBox).IsEnabled = false;
-                }*/                  
+                    string str = (item as TextBlock).Text;
+                    MessageBox.Show(str);
+
+                    if ((Convert.ToString( item as TextBlock)) == "Найдено 0 файлов, 0 папок, 0 Мб") (item as CheckBox).IsEnabled = false;
+                } 
+                */                
             }
-            else
-            {
-                log.RecordToLog("ERROR", ReadPaths.Info.ToString());
-                log.RecordToLog("ERROR", ActionsWithFilesAndFolders.Info.ToString());
-            }
-            TextBlock_log.Text = log.ReadTheLog();
-            /*
+            
+            TextBlock_log.Text = log.ReadTheLog();            
             Paragraph_log.Inlines.Clear();
-            Paragraph_log.Inlines.Add(log.ReadTheLog());*/
-            OutputLog2();
+            Paragraph_log.Inlines.Add(log.ReadTheLog());            
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
@@ -87,20 +83,20 @@ namespace BroomGUI
                     {                    
                         if (element.Name == item)
                         {
-                            MessageBox.Show(element.Path);
-                            log.RecordToLog("INFO", $"Подготовлено к удалению {element.NFiles+element.NFolders} объектов");
-                            DeleteSelected(element.Path, element.Path);      
+                            record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles+element.NFolders} объектов");
+                            element.DeleteSelected(element.Path, element.Path);                            
                         }
                     }
             }
+
+            record?.Invoke("INFO", "Удаление завершено");
             TextBlock_log.Text = log.ReadTheLog();
             Paragraph_log.Inlines.Clear();
             Paragraph_log.Inlines.Add(log.ReadTheLog());
                         
             selectedList = new List<string>();
             removeList.Clear();
-            removeList = RemoveList.GetRemoveList();
-            
+            removeList = RemoveList.GetRemoveList(); 
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)
@@ -125,44 +121,6 @@ namespace BroomGUI
             TextBlock_log.Text = "";
             Paragraph_log.Inlines.Clear();
         }
-
-
-
-        public void DeleteSelected(string path, string notdelpath)
-        {
-            if (Directory.Exists(path))
-            {
-                try
-                {
-                    int count = 0;
-                    string[] files = Directory.GetFiles(path);
-                    foreach (var file in files)
-                    {
-                        try
-                        {
-                            File.Delete(file);
-                            count++;
-                            log.RecordToLog("SUCCESS", $"Удален {file}");
-                        }
-                        catch { log.RecordToLog("ERROR", $"Нет доступа к {file}"); }
-                    }
-
-                    string[] folders = Directory.GetDirectories(path);
-                    foreach (var folder in folders) DeleteSelected(folder, notdelpath);
-                                        
-                    if (path!= notdelpath && files.Length == 0 && folders.Length == 0)
-                    {
-                        Directory.Delete(path);
-                        count++;
-                    }
-                    log.RecordToLog("SUCCESS", $"Удалено {count} объектов");
-                }
-                catch { log.RecordToLog("WARN", $"Нет доступа к {path}"); }
-            }
-            else { log.RecordToLog("ERROR", $"{path} не найден"); }
-        }
-
-
         /*
         private void OutputLog1()
         {
@@ -188,8 +146,7 @@ namespace BroomGUI
                 text = next;
             }
         }
-
-        
+                
         private void OutputLog2()
         {
             Paragraph_log.Inlines.Clear();            
@@ -219,7 +176,6 @@ namespace BroomGUI
                 text = next;
             }
         }
-
 
         private void SettingColorEvent ( string type)
         {            

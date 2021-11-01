@@ -19,6 +19,7 @@ namespace FilesAndFolders
 
         public static bool CheckPaths(string path)
         {
+            Info = LogToDB.RecordToLog;
             if (Directory.Exists(path)) return true;
             else
             {
@@ -50,11 +51,11 @@ namespace FilesAndFolders
               
         public void DeleteSelected(string path, string notdelpath)
         {
+            int count = 0;
             if (CheckPaths(path) == true)
             {
                 try
-                {
-                    int count = 0;
+                {                    
                     string[] files = Directory.GetFiles(path);
                     foreach (var file in files)
                     {
@@ -72,13 +73,17 @@ namespace FilesAndFolders
 
                     if (path != notdelpath && files.Length == 0 && folders.Length == 0)
                     {
-                        Directory.Delete(path);
-                        count++;
-                    }
-                    
-                    Info?.Invoke("SUCCESS", $"Удалено {count} объектов");
+                        try
+                        {
+                            Directory.Delete(path);
+                            count++;
+                            Info?.Invoke("SUCCESS", $"Удален {path}");
+                        }
+                        catch { Info?.Invoke("ERROR", $"Не удален {path}"); }
+                    }                    
                 }
                 catch { Info?.Invoke("ERROR", $"Не удалось зайти в папку {path}"); } //TO DO сделать обработку всех исключений
+                Info?.Invoke("SUCCESS", $"Удалено {count} объектов");
             }
             //else { Info?.Invoke("WARN", $"{path} не найден"); }
         }
@@ -88,9 +93,9 @@ namespace FilesAndFolders
     {
         private static ObservableCollection<ActionsWithFilesAndFolders> RemoveCollection = new ObservableCollection<ActionsWithFilesAndFolders>();
         public static ObservableCollection<ActionsWithFilesAndFolders> GetRemoveList()
-        {
-            //LogToDB log1 = new LogToDB();
-            //ReadPaths.Info = log1.RecordToLog;
+        {           
+            ReadPaths.Info = LogToDB.RecordToLog;
+            ActionsWithFilesAndFolders.Info = LogToDB.RecordToLog;
 
             Dictionary<string, string> folders = ReadPaths.GetDirectorySet();            
 
@@ -101,8 +106,7 @@ namespace FilesAndFolders
                     {
                         var filling = new ActionsWithFilesAndFolders();
                         filling.Name = f.Key;
-                        filling.Path = f.Value;
-                        //ActionsWithFilesAndFolders.Info = log1.RecordToLog;
+                        filling.Path = f.Value;                        
                         filling.CountFilesAndFolders(filling.Path);
                         filling.SizeDir = Math.Round(filling.SizeDir / 1048576, 1);
                         RemoveCollection.Add(filling);
