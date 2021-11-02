@@ -94,8 +94,8 @@ namespace FilesAndFolders
         private static ObservableCollection<ActionsWithFilesAndFolders> RemoveCollection = new ObservableCollection<ActionsWithFilesAndFolders>();
         public static ObservableCollection<ActionsWithFilesAndFolders> GetRemoveList()
         {           
-            ReadPaths.Info = LogToDB.RecordToLog;
-            ActionsWithFilesAndFolders.Info = LogToDB.RecordToLog;
+            //ReadPaths.Info = LogToDB.RecordToLog;
+            //ActionsWithFilesAndFolders.Info = LogToDB.RecordToLog;
 
             Dictionary<string, string> folders = ReadPaths.GetDirectorySet();            
 

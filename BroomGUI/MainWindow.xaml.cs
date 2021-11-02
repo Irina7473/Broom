@@ -34,13 +34,13 @@ namespace BroomGUI
             InitializeComponent();
             log = new LogToDB();
             record = LogToDB.RecordToLog;
-            //record += str => { Paragraph_log.Inlines.Add(new Run(str)};
-            record?.Invoke("INFO", "Запуск программы.");            
+            record += AppendFormattedText;
+            ReadPaths.Info = LogToDB.RecordToLog;
+            ReadPaths.Info += AppendFormattedText;
+            ActionsWithFilesAndFolders.Info = LogToDB.RecordToLog;
+            ActionsWithFilesAndFolders.Info += AppendFormattedText;
 
-            TextBlock_log.Text = log.ReadTheLog();
-            //OutputLog1();
-            Paragraph_log.Inlines.Add(log.ReadTheLog());
-            //OutputLog2();
+            record?.Invoke("INFO", "Запуск программы.");
 
             removeList = RemoveList.GetRemoveList();             
             if (removeList != null)
@@ -59,11 +59,7 @@ namespace BroomGUI
                     if ((Convert.ToString( item as TextBlock)) == "Найдено 0 файлов, 0 папок, 0 Мб") (item as CheckBox).IsEnabled = false;
                 } 
                 */                
-            }
-            
-            TextBlock_log.Text = log.ReadTheLog();            
-            Paragraph_log.Inlines.Clear();
-            Paragraph_log.Inlines.Add(log.ReadTheLog());            
+            }        
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
@@ -89,11 +85,7 @@ namespace BroomGUI
                     }
             }
 
-            record?.Invoke("INFO", "Удаление завершено");
-            TextBlock_log.Text = log.ReadTheLog();
-            Paragraph_log.Inlines.Clear();
-            Paragraph_log.Inlines.Add(log.ReadTheLog());
-                        
+            record?.Invoke("INFO", "Удаление завершено");                        
             selectedList = new List<string>();
             removeList.Clear();
             removeList = RemoveList.GetRemoveList(); 
@@ -115,93 +107,32 @@ namespace BroomGUI
             }
         }
 
+        private void Button_showAll_Click(object sender, RoutedEventArgs e)
+        {
+            RichTextBox_log.Document.Blocks.Clear();
+            RichTextBox_log.AppendText(log.ReadTheLog()+ "\r"); 
+        }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
-            log.ClearLog();
-            TextBlock_log.Text = "";
-            Paragraph_log.Inlines.Clear();
+            log.ClearLog();            
+            RichTextBox_log.Document.Blocks.Clear();
         }
-        /*
-        private void OutputLog1()
+        
+        private void AppendFormattedText(string type, string text)
         {
-            TextPointer text = TextBlock_log.ContentStart;
-            string typeInfo = "INFO";
-            while (true)
-            {
-                TextPointer next = text.GetNextContextPosition(LogicalDirection.Forward);
-                if (next == null)
-                {
-                    break;
-                }
-                TextRange txt = new TextRange(text, next);
+            TextRange rangeOfText1 = new TextRange(RichTextBox_log.Document.ContentEnd, RichTextBox_log.Document.ContentEnd);
+            rangeOfText1.Text = type;
+            rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            if (type=="INFO") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
+            if (type == "SUCCESS") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Green);
+            if (type == "WARN") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Purple);
+            if (type == "ERROR") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
 
-                int indx = txt.Text.IndexOf(typeInfo);
-                if (indx > 0)
-                {
-                    TextPointer sta = text.GetPositionAtOffset(indx);
-                    TextPointer end = text.GetPositionAtOffset(indx + typeInfo.Length);
-                    TextRange textR = new TextRange(sta, end);
-                    textR.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Yellow));
-                }
-                text = next;
-            }
-        }
-                
-        private void OutputLog2()
-        {
-            Paragraph_log.Inlines.Clear();            
-            Paragraph_log.Inlines.Add(log.ReadTheLog());
-
-            Paragraph_log.Foreground = new SolidColorBrush(Colors.MediumVioletRed);
-                        
-            TextPointer text = Paragraph_log.ContentStart;            
-            string typeInfo = "INFO";
-            while (text!=null)
-            {
-                TextPointer next = text.GetNextContextPosition(LogicalDirection.Forward);
-                if (next == null)
-                {
-                    break;
-                }
-                TextRange txt = new TextRange(text, next);
-
-                int indx = txt.Text.IndexOf(typeInfo);
-                if (indx > 0)
-                {
-                    TextPointer sta = text.GetPositionAtOffset(indx);
-                    TextPointer end = text.GetPositionAtOffset(indx + typeInfo.Length);
-                    TextRange textR = new TextRange(sta, end);
-                    textR.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Yellow));
-                }
-                text = next;
-            }
+            TextRange rangeOfWord = new TextRange(RichTextBox_log.Document.ContentEnd, RichTextBox_log.Document.ContentEnd);
+            rangeOfWord.Text = " " + text + "\r";
+            rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
+            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
         }
 
-        private void SettingColorEvent ( string type)
-        {            
-            TextPointer text = Paragraph_log.ContentStart;
-            while (true)
-            {
-                TextPointer next = text.GetNextContextPosition(LogicalDirection.Forward);
-                if (next == null)
-                {
-                    break;
-                }
-                TextRange txt = new TextRange(text, next);
-
-                int indx = txt.Text.IndexOf(type);
-                if (indx > 0)
-                {
-                    TextPointer sta = text.GetPositionAtOffset(indx);
-                    TextPointer end = text.GetPositionAtOffset(indx + type.Length);
-                    TextRange textR = new TextRange(sta, end);
-                    textR.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Yellow));
-                }
-                text = next;
-            }
-
-            
-        }
-        */
     }
 }

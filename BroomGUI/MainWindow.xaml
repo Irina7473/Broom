@@ -39,10 +39,9 @@
             <TabControl Margin="10">
                 <TabItem Header = "Основное" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
-                        <Button x:Name = "Button_startCleaning" Content = "Начать очистку" 
-                                Click="Button_startCleaning_Click"
-                                DockPanel.Dock="Bottom" Margin="10" HorizontalAlignment = "Center" 
-                                Width = "150" FontSize = "15" />
+                        <Button DockPanel.Dock="Bottom" x:Name = "Button_startCleaning" 
+                                Content = "Начать очистку" Click="Button_startCleaning_Click"                                
+                                Style="{DynamicResource style_Button}" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>
@@ -83,28 +82,34 @@
                             </Grid>
                         </Border>
                     </DockPanel>
-                </TabItem >
+                </TabItem >                
                 <TabItem Header = "Результат выполнения" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
-                        <Button x:Name = "Button_clearLog" Content = "Очистить лог" Click="Button_clearLog_Click"
-                                DockPanel.Dock="Bottom" Margin="10"
-                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
-                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" >
+                            <Button x:Name = "Button_showAll" 
+                                    Content = "Показать все" Click="Button_showAll_Click"                                 
+                                    Style="{DynamicResource style_Button}" />
+                            <Button x:Name = "Button_clearLog3" 
+                                    Content = "Очистить лог" Click="Button_clearLog_Click"                                 
+                                    Style="{DynamicResource style_Button}" />
+                        </StackPanel>                        
+                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" >
                             <ScrollViewer>
-                                <TextBlock x:Name = "TextBlock_log" Margin="10" TextWrapping="Wrap" />
-                            </ScrollViewer>                              
-                        </Border>                        
+                                <RichTextBox x:Name="RichTextBox_log" FontSize="12" Block.LineHeight="2"/>
+                            </ScrollViewer>
+                        </Border>
                     </DockPanel>
                 </TabItem >
+                <!--                
                 <TabItem Header = "Результат выполнения2" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
-                        <Button x:Name = "Button_clearLog2" Content = "Очистить лог" Click="Button_clearLog_Click"
-                                DockPanel.Dock="Bottom" Margin="10"
-                                HorizontalAlignment = "Center" Width = "150" FontSize = "15" />
+                        <Button DockPanel.Dock="Bottom" x:Name = "Button_clearLog2" 
+                                Content = "Очистить лог" Click="Button_clearLog_Click"                                 
+                                Style="{DynamicResource style_Button}" />
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" >
                             <FlowDocumentReader>
                                     <FlowDocument>
-                                    <Paragraph  x:Name="Paragraph_log" TextIndent="5" FontSize = "15" Style="{DynamicResource style_Paragraph}">
+                                    <Paragraph  x:Name="Paragraph_log" TextIndent="5" FontSize = "12">
                                         <Run></Run>
                                         </Paragraph>
                                     </FlowDocument>
@@ -112,6 +117,7 @@
                         </Border>
                     </DockPanel>
                 </TabItem >
+                -->
             </TabControl>
         </DockPanel>
     </Grid>

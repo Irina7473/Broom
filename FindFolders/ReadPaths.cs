@@ -28,12 +28,12 @@ namespace FilesAndFolders
                         Folders[key] = Folders[key].Replace("%homepath%", userPath);
                         Folders[key] = Folders[key].Replace("%HOMEPATH%", userPath);
                     }
-                Info?.Invoke("INFO", $"{jsonFile} прочитан");
+                Info?.Invoke("INFO", $"{jsonFile} прочитан.");
                 return Folders;
             }
             catch
             {
-                Info?.Invoke("ERROR", $"{jsonFile} не найден");                
+                Info?.Invoke("ERROR", $"{jsonFile} не найден.");                
                 return null;
             }
         }
