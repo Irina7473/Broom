@@ -26,18 +26,28 @@ namespace BroomGUI
     {
         ObservableCollection<ActionsWithFilesAndFolders> removeList;
         List<string> selectedList;
-        LogToDB log;
+        //LogToDB log;
+        LogToFile log2;
         Message record;
 
         public MainWindow()
         {
             InitializeComponent();
+            /*
             log = new LogToDB();
-            record = LogToDB.RecordToLog;
+            record = log.RecordToLog;
             record += AppendFormattedText;
-            ReadPaths.Info = LogToDB.RecordToLog;
+            ReadPaths.Info = log.RecordToLog;
             ReadPaths.Info += AppendFormattedText;
-            ActionsWithFilesAndFolders.Info = LogToDB.RecordToLog;
+            ActionsWithFilesAndFolders.Info = log.RecordToLog;
+            ActionsWithFilesAndFolders.Info += AppendFormattedText;
+            */
+            log2 = new LogToFile();
+            record = log2.RecordToLog;
+            record += AppendFormattedText;
+            ReadPaths.Info = log2.RecordToLog;
+            ReadPaths.Info += AppendFormattedText;
+            ActionsWithFilesAndFolders.Info = log2.RecordToLog;
             ActionsWithFilesAndFolders.Info += AppendFormattedText;
 
             record?.Invoke("INFO", "Запуск программы.");
@@ -110,11 +120,13 @@ namespace BroomGUI
         private void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
             RichTextBox_log.Document.Blocks.Clear();
-            RichTextBox_log.AppendText(log.ReadTheLog()+ "\r"); 
+            //RichTextBox_log.AppendText(log.ReadTheLog()+ "\r");
+            RichTextBox_log.AppendText(log2.ReadTheLog() + "\r");
         }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
-            log.ClearLog();            
+            //log.ClearLog();
+            log2.ClearLog();
             RichTextBox_log.Document.Blocks.Clear();
         }
         
@@ -129,10 +141,10 @@ namespace BroomGUI
             if (type == "ERROR") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
 
             TextRange rangeOfWord = new TextRange(RichTextBox_log.Document.ContentEnd, RichTextBox_log.Document.ContentEnd);
-            rangeOfWord.Text = " " + text + "\r";
+            //rangeOfWord.Text = " " + text + "\r";
+            rangeOfWord.Text = " " + DateTime.Now + " " + Environment.UserName + " " + text + "\r";
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
         }
-
     }
 }

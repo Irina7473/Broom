@@ -19,7 +19,6 @@ namespace FilesAndFolders
 
         public static bool CheckPaths(string path)
         {
-            Info = LogToDB.RecordToLog;
             if (Directory.Exists(path)) return true;
             else
             {
@@ -93,10 +92,7 @@ namespace FilesAndFolders
     {
         private static ObservableCollection<ActionsWithFilesAndFolders> RemoveCollection = new ObservableCollection<ActionsWithFilesAndFolders>();
         public static ObservableCollection<ActionsWithFilesAndFolders> GetRemoveList()
-        {           
-            //ReadPaths.Info = LogToDB.RecordToLog;
-            //ActionsWithFilesAndFolders.Info = LogToDB.RecordToLog;
-
+        {                       
             Dictionary<string, string> folders = ReadPaths.GetDirectorySet();            
 
             if (folders != null)

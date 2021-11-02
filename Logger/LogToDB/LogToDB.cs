@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Logger
 {
-    public class LogToDB: ILogger
+    public class LogToDB
     {
         private static FileStream file;
         private static Config config;
@@ -30,7 +30,7 @@ namespace Logger
             _query = new SqliteCommand { Connection = _connection };
         }
 
-        public void Open()
+        private void Open()
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Logger
             }
         }
 
-        public void Close()
+        private void Close()
         {
             _connection.Close();
         }
@@ -62,7 +62,7 @@ namespace Logger
             return result;
         }
 
-        public static void RecordToLog(string typeEvent, string message)
+        public void RecordToLog(string typeEvent, string message)
         {
             _connection.Open();
             _query.CommandText = $"INSERT INTO tab_total_log (type_event, date_time_event, user, message)" +

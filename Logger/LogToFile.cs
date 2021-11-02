@@ -5,94 +5,45 @@ using System.Collections.Generic;
 
 namespace Logger
 {
-    public class LogToFile: ILogger
+    public class LogToFile
     {
-        private readonly string TotalPath;
-        private readonly string SuccessPath;
-        private readonly string ErrorsPath;
-        private readonly string PathLoggerDir=Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"Log");
-        //в разработке вариант с config файлом
-
-        public LogToFile()
-        {
-            //создается 1 раз при 1 запуске программы
-            Directory.CreateDirectory(PathLoggerDir);
-            //создается 1 раз при 1 запуске программы
-            TotalPath = Path.Combine(PathLoggerDir, "TotalLog.log");
-            //создаются по 1 на каждую текущую дату
-            var creatTime = DateTime.Now.ToShortDateString();
-            var sLog = "SuccessLog" + "_" + creatTime + ".log";
-            SuccessPath = Path.Combine(PathLoggerDir, sLog); 
-            var eLog = "ErrorsLog" + "_" + creatTime + ".log";
-            ErrorsPath = Path.Combine(PathLoggerDir, eLog);  
-        }
+        private readonly string TotalPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TotalLog.log");               
+         
+        public LogToFile() { }
 
         public LogToFile(string path)
-        {
-            PathLoggerDir = path;
-            var creatTime = DateTime.Now.ToShortDateString();
+        {            
             try
-            {
-                //создается 1 раз при 1 запуске программы
-                TotalPath = Path.Combine(PathLoggerDir, "TotalLog.log");
-                //создаются по 1 на каждую текущую дату      
-                var sLog = "SuccessLog" + "_" + creatTime + ".log";
-                SuccessPath = Path.Combine(PathLoggerDir, sLog);
-                var eLog = "ErrorsLog" + "_" + creatTime + ".log";
-                ErrorsPath = Path.Combine(PathLoggerDir, eLog);
+            {                
+                TotalPath = Path.Combine(path, "TotalLog.log");
             }
             catch
             {
-                throw new Exception("Путь к месту записи файлов не найден");
+                throw new Exception("Путь к TotalLog.log не найден");
             }            
+        }     
+
+        public void RecordToLog(string typeevent, string message) 
+        {
+            var text = typeevent + " " + DateTime.Now + " " + Environment.UserName + " " + message + " \n";
+            File.AppendAllTextAsync(TotalPath, text);
         }
 
-        public async void RecordToLog(string typeevent, string message) 
+        public string ReadTheLog() 
         {
-            var text = typeevent + " | " + DateTime.Now + " | " + Environment.UserName + " | " + message + " \n";
-            Console.WriteLine(text);
-            switch (typeevent)
+            string log = "";
+            if (File.Exists(TotalPath))
             {
-                case "INFO":
-                case "WARN":
-                    await File.AppendAllTextAsync(TotalPath, text);
-                    break;
-                case "SUCCESS":
-                    await File.AppendAllTextAsync(SuccessPath, text);
-                    break;
-                case "ERROR":
-                    await File.AppendAllTextAsync(ErrorsPath, text);
-                    break;
-            }
-        }
-
-        public void ReadTheLog() 
-        {
-            Reader(TotalPath);
-            Reader(SuccessPath);
-            Reader(ErrorsPath);            
-        }
-
-        private async void Reader(string path)
-        {
-            if (File.Exists(path))
-            {
-                StreamReader reader = new(path);
-                Console.WriteLine(await reader.ReadToEndAsync());
+                StreamReader reader = new(TotalPath);
+                log += reader.ReadToEnd();
                 reader.Close();
             }
-
+            return log;
         }
 
-        public void ClearLogr()
+        public void ClearLog()
         {
-            if (Directory.Exists(PathLoggerDir))
-            {
-                File.WriteAllText(TotalPath, null);
-                var directoryInfo = new DirectoryInfo(PathLoggerDir);                 
-                foreach (var file in directoryInfo.GetFiles()) 
-                        if (file.Name != "TotalLog.log") file.Delete(); 
-            }
+            File.WriteAllText(TotalPath, null); 
         }
     }
 }
