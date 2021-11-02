@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Logger
 {
-    public class LogToFile
+    public class LogToFile:ILogger
     {
         private readonly string TotalPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TotalLog.log");               
          

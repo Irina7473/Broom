@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Logger
 {
-    public class LogToDB
+    public class LogToDB:ILogger
     {
         private static FileStream file;
         private static Config config;

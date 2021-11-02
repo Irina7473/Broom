@@ -85,12 +85,15 @@
                 </TabItem >                
                 <TabItem Header = "Результат выполнения" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
-                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" >
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button x:Name = "Button_showAll" 
                                     Content = "Показать все" Click="Button_showAll_Click"                                 
                                     Style="{DynamicResource style_Button}" />
-                            <Button x:Name = "Button_clearLog3" 
+                            <Button x:Name = "Button_clearLog" 
                                     Content = "Очистить лог" Click="Button_clearLog_Click"                                 
+                                    Style="{DynamicResource style_Button}" />
+                            <Button x:Name = "Button_clearShowing" 
+                                    Content = "Очистить показ" Click="Button_clearShowing_Click"                                 
                                     Style="{DynamicResource style_Button}" />
                         </StackPanel>                        
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" >

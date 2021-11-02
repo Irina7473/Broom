@@ -127,9 +127,14 @@ namespace BroomGUI
         {
             //log.ClearLog();
             log2.ClearLog();
+            //RichTextBox_log.Document.Blocks.Clear();
+        }
+
+        private void Button_clearShowing_Click(object sender, RoutedEventArgs e)
+        {
             RichTextBox_log.Document.Blocks.Clear();
         }
-        
+
         private void AppendFormattedText(string type, string text)
         {
             TextRange rangeOfText1 = new TextRange(RichTextBox_log.Document.ContentEnd, RichTextBox_log.Document.ContentEnd);
@@ -146,5 +151,6 @@ namespace BroomGUI
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
         }
+
     }
 }
