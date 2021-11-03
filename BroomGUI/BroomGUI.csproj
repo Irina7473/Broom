@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Logger\Logger.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="broom.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

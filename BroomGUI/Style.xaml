@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
     <Style x:Key="style_Button" TargetType="Button">
         <Style.Setters>
             <Setter Property="FontSize" Value="15" />
@@ -31,5 +32,23 @@
                 <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
         </Style.Triggers>
-    </Style>    
+    </Style>
+
+    <Style x:Key="style_ProgressBar" TargetType="ProgressBar">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar" >
+                    <Grid x:Name="Root">
+                        <Border Name="PART_Track" 
+            CornerRadius="2" BorderThickness="1" 
+            Background="Lavender" BorderBrush="MediumPurple" />
+                        <Border Name="PART_Indicator" 
+            CornerRadius="1" BorderThickness="2" 
+            Background="MediumPurple"  BorderBrush="MediumPurple"             
+            HorizontalAlignment="Left" />
+                    </Grid>       
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

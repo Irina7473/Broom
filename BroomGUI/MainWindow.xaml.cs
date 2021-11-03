@@ -14,8 +14,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Threading;
+
 using FilesAndFolders;
 using Logger;
+
 
 namespace BroomGUI
 {
@@ -24,6 +28,22 @@ namespace BroomGUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public delegate void ProgressHandler(int progress);
+        public class FileProcessor
+        {
+            public event ProgressHandler Progress;
+
+            public void DoWork()
+            {
+                for (int i = 1; i <= 100; ++i)
+                {
+                    Thread.Sleep(10);
+                    if (Progress != null)
+                        Progress(i);
+                }
+            }
+        }
+
         ObservableCollection<ActionsWithFilesAndFolders> removeList;
         List<string> selectedList;
         //LogToDB log;
@@ -49,40 +69,46 @@ namespace BroomGUI
             ReadPaths.Info += AppendFormattedText;
             ActionsWithFilesAndFolders.Info = log2.RecordToLog;
             ActionsWithFilesAndFolders.Info += AppendFormattedText;
+            RecycleBinFolder.Info = log2.RecordToLog;
+            RecycleBinFolder.Info += AppendFormattedText;
 
-            record?.Invoke("INFO", "Запуск программы.");
-
+            record?.Invoke("INFO", "Запуск программы.");            
             removeList = RemoveList.GetRemoveList();             
             if (removeList != null)
             {
                 record?.Invoke("INFO", $"Считано {removeList.Count} записей кофигурационного файла.");
                 selectedList = new List<string>();
-                ListView_folders.ItemsSource = removeList;
-
-                /*
-                foreach (var item in ListView_folders.ItemsSource)
-                {
-                    //if (element.NFiles==0 && element.NFolders==0 && element.SizeDir==0)
-                    string str = (item as TextBlock).Text;
-                    MessageBox.Show(str);
-
-                    if ((Convert.ToString( item as TextBlock)) == "Найдено 0 файлов, 0 папок, 0 Мб") (item as CheckBox).IsEnabled = false;
-                } 
-                */                
-            }        
+                ListView_folders.ItemsSource = removeList;        
+            }
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
-        {                       
+        {
+            var processor = new FileProcessor();
+            processor.Progress += ProcessorProgress;
+
+            var thread = new Thread(processor.DoWork);
+            thread.Start();
+            //Window_ContentRendered(sender, e);
+
             foreach (var item in selectedList)
             {
                 if (item == "Очистить все")
                 {
                     //to do
+                    foreach (var element in removeList)
+                    {                        
+                        record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles + element.NFolders} объектов");
+                        element.DeleteSelected(element.Path, element.Path);                        
+                    }
+                    RecycleBinFolder.Delete();                    
+                    CheckBox_clearAll.IsChecked = false;
                 }
                 else if (item == "Очистить корзину")
                 {
                     //to do
+                    RecycleBinFolder.Delete();
+                    CheckBox_clearBasket.IsChecked = false;
                 }
                 else
                     foreach (var element in removeList)
@@ -94,11 +120,12 @@ namespace BroomGUI
                         }
                     }
             }
-
+            
+            MessageBox.Show("Удаление завершено");
             record?.Invoke("INFO", "Удаление завершено");                        
             selectedList = new List<string>();
             removeList.Clear();
-            removeList = RemoveList.GetRemoveList(); 
+            removeList = RemoveList.GetRemoveList();
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)
@@ -119,6 +146,9 @@ namespace BroomGUI
 
         private void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
+            btnStart_Click(sender, e);
+            //Window_ContentRendered(sender, e);
+
             RichTextBox_log.Document.Blocks.Clear();
             //RichTextBox_log.AppendText(log.ReadTheLog()+ "\r");
             RichTextBox_log.AppendText(log2.ReadTheLog() + "\r");
@@ -150,6 +180,56 @@ namespace BroomGUI
             rangeOfWord.Text = " " + DateTime.Now + " " + Environment.UserName + " " + text + "\r";
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+        }
+
+        //Вариант1
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+
+            worker.RunWorkerAsync();
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                (sender as BackgroundWorker).ReportProgress(i);
+                Thread.Sleep(10);
+            }
+        }
+
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressBar_status.Value = e.ProgressPercentage;
+        }
+        
+
+        //Вариант 2
+        
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            var processor = new FileProcessor();
+            processor.Progress += ProcessorProgress;
+
+            var thread = new Thread(processor.DoWork);
+            thread.Start();
+        }
+
+        void ProcessorProgress(int progress)
+        {            
+            if (!ProgressBar_status.Dispatcher.CheckAccess())
+            {
+                ProgressBar_status.Dispatcher.Invoke(new ProgressHandler(ProcessorProgress), progress);
+            }
+            else
+            {
+                ProgressBar_status.Value = progress;
+            }
         }
 
     }
