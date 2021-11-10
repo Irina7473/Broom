@@ -22,7 +22,7 @@ namespace FilesAndFolders
             if (Directory.Exists(path)) return true;
             else
             {
-                Info?.Invoke("WARN", $"{path} не найден");
+                Info?.Invoke("WARN", $"Каталог {path} не существует или нет разрешения на доступ к нему");
                 return false;
             }
         }
@@ -43,9 +43,15 @@ namespace FilesAndFolders
                     NFolders += folders.Length;
                     foreach (var folder in folders) CountFilesAndFolders(folder.FullName);
                 }
-                catch { Info?.Invoke("ERROR", $"Не удалось зайти в папку {path}"); } //TO DO сделать обработку всех исключений
+                catch (ArgumentException)
+                { Info?.Invoke("ERROR", $"{path} содержит недопустимые символы."); }
+                catch (UnauthorizedAccessException)
+                { Info?.Invoke("ERROR", $"Отсутствует необходимое разрешение на доступ к {path}"); }
+                catch (IOException)
+                { Info?.Invoke("ERROR", $"Произошла сетевая ошибка при доступе к {path}"); }
+                catch
+                { Info?.Invoke("ERROR", $"Неизвестная ошибка при доступе к {path}"); }
             }
-            //else { Info?.Invoke("WARN", $"{path} не найден"); }
         }
               
         public void DeleteSelected(string path, string notdelpath)
@@ -60,11 +66,17 @@ namespace FilesAndFolders
                     {
                         try
                         {
-                            File.Delete(file);
+                            File.Delete(file);   //TO DO
                             count++;                            
-                            Info?.Invoke("SUCCESS", $"Удален {file}");
+                            Info?.Invoke("SUCCESS", $"{file} удален.");
                         }
-                        catch { Info?.Invoke("ERROR", $"Не удалось удалить {file}"); }
+                        catch (ArgumentException)
+                        { Info?.Invoke("ERROR", $"{file} содержит недопустимые символы."); }
+                        catch (IOException)
+                        { Info?.Invoke("ERROR", $"{file} используется"); }
+                        catch (UnauthorizedAccessException)
+                        { Info?.Invoke("ERROR", $"Отсутствует необходимое разрешение на доступ к {file}"); }
+                        catch { Info?.Invoke("ERROR", $"{file} не удален"); }
                     }
 
                     string[] folders = Directory.GetDirectories(path);
@@ -74,17 +86,30 @@ namespace FilesAndFolders
                     {
                         try
                         {
-                            Directory.Delete(path);
+                            Directory.Delete(path);   //TO DO
                             count++;
-                            Info?.Invoke("SUCCESS", $"Удален {path}");
+                            Info?.Invoke("SUCCESS", $"{path} удален.");
                         }
+                        catch (IOException)
+                        { Info?.Invoke("ERROR", $"{path} доступен только для чтения или используется другим процессом"); }
+                        catch (UnauthorizedAccessException)
+                        { Info?.Invoke("ERROR", $"Отсутствует необходимое разрешение на доступ к {path}"); }
+                        catch (ArgumentException)
+                        { Info?.Invoke("ERROR", $"{path} содержит недопустимые символы."); }
                         catch { Info?.Invoke("ERROR", $"Не удален {path}"); }
                     }                    
                 }
-                catch { Info?.Invoke("ERROR", $"Не удалось зайти в папку {path}"); } //TO DO сделать обработку всех исключений
+                catch (ArgumentException)
+                { Info?.Invoke("ERROR", $"{path} содержит недопустимые символы."); }
+                catch (UnauthorizedAccessException)
+                { Info?.Invoke("ERROR", $"Отсутствует необходимое разрешение на доступ к {path}"); }
+                catch (IOException)
+                { Info?.Invoke("ERROR", $"Произошла сетевая ошибка при доступе к {path}"); }
+                catch
+                { Info?.Invoke("ERROR", $"Неизвестная ошибка при доступе к {path}"); }
+
                 Info?.Invoke("SUCCESS", $"Удалено {count} объектов");
             }
-            //else { Info?.Invoke("WARN", $"{path} не найден"); }
         }
     }
     

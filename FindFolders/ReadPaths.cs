@@ -67,6 +67,11 @@ namespace FilesAndFolders
                 Info?.Invoke("ERROR", "Совместимые объекты JsonConverter для TValue или его сериализуемых членов отсутствуют.");
                 return null;
             }
+            catch
+            {
+                Info?.Invoke("ERROR", $"Неизвестная ошибка при сериализации {jsonFile}");
+                return null;
+            }
         }
     }
 }
