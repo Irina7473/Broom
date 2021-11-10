@@ -5,9 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BroomGUI"
         mc:Ignorable="d"
-        Title="Очистка мусора BROOM" Height="800" Width="600"
-        ContentRendered="Window_ContentRendered">
-    
+        Title="Очистка мусора BROOM" Height="800" Width="600"> 
     <Window.Resources>
         <ResourceDictionary Source="Style.xaml"/>
     </Window.Resources>
@@ -29,21 +27,18 @@
                            Margin="10" TextAlignment="Center" Height="110" 
                            FontFamily="Segoe Print" FontSize="60" FontStyle="Normal" FontWeight="Bold">
                 </TextBlock>
-            </Border>       
-            
-            <StatusBar Name="sbar" DockPanel.Dock="Bottom" 
-                   Background="Lavender" Margin="10" HorizontalAlignment="Center">
+            </Border> 
+            <StatusBar DockPanel.Dock="Bottom" HorizontalAlignment="Center">
+                <TextBlock x:Name="TextBlock_sbar" Width="200" Height="20"/>
+                <ProgressBar Name="ProgressBar_slider" Minimum="0" Maximum="100"                                
+                                 Style="{DynamicResource style_ProgressBar1}"/>
+                <!--
                 <StatusBarItem>
-                    <ProgressBar Minimum="0" Maximum="100" 
-                                 Height="20" Width="550" Background="Lavender" 
-                                 Name="ProgressBar_status" 
-                                 Style="{DynamicResource style_ProgressBar}"/>
+                    <ProgressBar Name="ProgressBar_status" Minimum="0" Maximum="100"                                
+                                 Style="{DynamicResource style_ProgressBar2}"/>                    
                 </StatusBarItem>
-                <StatusBarItem >
-
-                </StatusBarItem>
-            </StatusBar>            
-            
+            -->
+            </StatusBar>
             <TabControl Margin="10">
                 <TabItem Header = "Основное" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
@@ -111,7 +106,7 @@
                         </Border>
                     </DockPanel>
                 </TabItem >
-                <!--                
+                <!--     Другой вывод           
                 <TabItem Header = "Результат выполнения2" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
                         <Button DockPanel.Dock="Bottom" x:Name = "Button_clearLog2" 

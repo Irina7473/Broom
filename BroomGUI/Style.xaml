@@ -34,7 +34,22 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="style_ProgressBar" TargetType="ProgressBar">
+    <Style x:Key="style_ProgressBar1" TargetType="ProgressBar">
+        <Setter Property="Width" Value="300" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Margin" Value="10" />
+        <!--
+        <Setter Property="Background" Value="Lavender" />
+        <Setter Property="BorderBrush" Value="MediumPurple" />
+        <Setter Property="BorderThickness" Value="1" />   -->
+        
+    </Style>
+
+    <Style x:Key="style_ProgressBar2" TargetType="ProgressBar">
+        <Setter Property="Width" Value="550" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ProgressBar" >

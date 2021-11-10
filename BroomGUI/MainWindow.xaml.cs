@@ -28,32 +28,20 @@ namespace BroomGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public delegate void ProgressHandler(int progress);
-        public class FileProcessor
-        {
-            public event ProgressHandler Progress;
-
-            public void DoWork()
-            {
-                for (int i = 1; i <= 100; ++i)
-                {
-                    Thread.Sleep(10);
-                    if (Progress != null)
-                        Progress(i);
-                }
-            }
-        }
-
+        
         ObservableCollection<ActionsWithFilesAndFolders> removeList;
         List<string> selectedList;
-        //LogToDB log;
-        LogToFile log2;
+        //LogToDB log; //для базы данных
+        LogToFile log2; //для текст файла
         Message record;
 
         public MainWindow()
         {
-            InitializeComponent();
-            /*
+            InitializeComponent();            
+            //ProgressBar_slider.Visibility = Visibility.Hidden;
+            //ProgressBar_slider.IsIndeterminate = false;
+
+            /* Для журналирования в базу данных
             log = new LogToDB();
             record = log.RecordToLog;
             record += AppendFormattedText;
@@ -62,6 +50,7 @@ namespace BroomGUI
             ActionsWithFilesAndFolders.Info = log.RecordToLog;
             ActionsWithFilesAndFolders.Info += AppendFormattedText;
             */
+            // Для журналирования в текстовый файл
             log2 = new LogToFile();
             record = log2.RecordToLog;
             record += AppendFormattedText;
@@ -80,17 +69,12 @@ namespace BroomGUI
                 selectedList = new List<string>();
                 ListView_folders.ItemsSource = removeList;        
             }
+            TextBlock_sbar.Text = "Можно удалять";
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
-        {
-            var processor = new FileProcessor();
-            processor.Progress += ProcessorProgress;
-
-            var thread = new Thread(processor.DoWork);
-            thread.Start();
-            //Window_ContentRendered(sender, e);
-
+        {            
+            TextBlock_sbar.Text = "Удаление";
             foreach (var item in selectedList)
             {
                 if (item == "Очистить все")
@@ -99,6 +83,7 @@ namespace BroomGUI
                     foreach (var element in removeList)
                     {                        
                         record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles + element.NFolders} объектов");
+
                         element.DeleteSelected(element.Path, element.Path);                        
                     }
                     RecycleBinFolder.Delete();                    
@@ -116,12 +101,12 @@ namespace BroomGUI
                         if (element.Name == item)
                         {
                             record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles+element.NFolders} объектов");
-                            element.DeleteSelected(element.Path, element.Path);                            
+                            element.DeleteSelected(element.Path, element.Path);                                                                     
                         }
                     }
             }
-            
-            MessageBox.Show("Удаление завершено");
+
+            TextBlock_sbar.Text = "Удаление завершено";
             record?.Invoke("INFO", "Удаление завершено");                        
             selectedList = new List<string>();
             removeList.Clear();
@@ -146,23 +131,23 @@ namespace BroomGUI
 
         private void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
-            btnStart_Click(sender, e);
-            //Window_ContentRendered(sender, e);
-
             RichTextBox_log.Document.Blocks.Clear();
-            //RichTextBox_log.AppendText(log.ReadTheLog()+ "\r");
+            //RichTextBox_log.AppendText(log.ReadTheLog()+ "\r");  //для базы данных
             RichTextBox_log.AppendText(log2.ReadTheLog() + "\r");
+            ProgressBar_slider.IsIndeterminate = false;
+            TextBlock_sbar.Text = "Журнал удалений загружен";            
         }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
-            //log.ClearLog();
+            //log.ClearLog(); //для базы данных
             log2.ClearLog();
-            //RichTextBox_log.Document.Blocks.Clear();
+            TextBlock_sbar.Text = "Журнал удалений очищен";
         }
 
         private void Button_clearShowing_Click(object sender, RoutedEventArgs e)
         {
             RichTextBox_log.Document.Blocks.Clear();
+            TextBlock_sbar.Text = "Показ очищен";
         }
 
         private void AppendFormattedText(string type, string text)
@@ -176,19 +161,35 @@ namespace BroomGUI
             if (type == "ERROR") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
 
             TextRange rangeOfWord = new TextRange(RichTextBox_log.Document.ContentEnd, RichTextBox_log.Document.ContentEnd);
-            //rangeOfWord.Text = " " + text + "\r";
+            //rangeOfWord.Text = " " + text + "\r";  //для базы данных
             rangeOfWord.Text = " " + DateTime.Now + " " + Environment.UserName + " " + text + "\r";
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
-        }
+        }    
+    }
+}
 
-        //Вариант1
+/*
+ *  Task.Run(() =>
+                            {
+                                element.DeleteSelected(element.Path, element.Path);
+                            });  
+ * 
+ * var processor = new Processor();
+            processor.Progress += ProcessorProgress;
+            var thread = new Thread(processor.DoWork);
+            thread.Start();
+            //Window_ContentRendered(sender, e);
+
+ //Вариант1
+<!-- ContentRendered="Window_ContentRendered"-->
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             BackgroundWorker worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
             worker.DoWork += worker_DoWork;
             worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
 
             worker.RunWorkerAsync();
         }
@@ -206,14 +207,27 @@ namespace BroomGUI
         {
             ProgressBar_status.Value = e.ProgressPercentage;
         }
-        
-
+                
         //Вариант 2
-        
+        public delegate void ProgressHandler(int progress);
+        public class Processor
+        {
+            public event ProgressHandler Progress;
+
+            public void DoWork()
+            {
+                for (int i = 1; i <= 100; ++i)
+                {
+                    Thread.Sleep(10);
+                    if (Progress != null)
+                        Progress(i);
+                }
+            }
+        }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var processor = new FileProcessor();
+            var processor = new Processor();
             processor.Progress += ProcessorProgress;
 
             var thread = new Thread(processor.DoWork);
@@ -231,6 +245,4 @@ namespace BroomGUI
                 ProgressBar_status.Value = progress;
             }
         }
-
-    }
-}
+  */

@@ -17,9 +17,35 @@ namespace FilesAndFolders
 
         public static Dictionary<string, string> GetDirectorySet()
         {
+            string text = "";
             try
             {
-                Dictionary<string, string> Folders = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(jsonFile));
+                text = File.ReadAllText(jsonFile);
+                Info?.Invoke("INFO", $"{jsonFile} прочитан.");
+            }
+            catch (FileNotFoundException)
+            {                
+                Info?.Invoke("ERROR", $"{jsonFile} не найден.");
+                return null;
+            }
+            catch (IOException)
+            {
+                Info?.Invoke("ERROR", $"При открытии файла {jsonFile} произошла ошибка ввода-вывода.");
+                return null;
+            }
+            catch (NotSupportedException)
+            {
+                Info?.Invoke("ERROR", $"Параметр {jsonFile} задан в недопустимом формате.");
+                return null;
+            }
+            catch
+            {
+                Info?.Invoke("ERROR", $"Неизвестная ошибка при чтении {jsonFile}");
+                return null;
+            }
+            try
+            { 
+            Dictionary<string, string> Folders = JsonSerializer.Deserialize<Dictionary<string, string>>(text);
 
                 var userPath = $@"C:\Users\{Environment.UserName}";
                 foreach (var key in Folders.Keys)
@@ -28,12 +54,17 @@ namespace FilesAndFolders
                         Folders[key] = Folders[key].Replace("%homepath%", userPath);
                         Folders[key] = Folders[key].Replace("%HOMEPATH%", userPath);
                     }
-                Info?.Invoke("INFO", $"{jsonFile} прочитан.");
+                Info?.Invoke("INFO", $"Данные из {jsonFile} загружены.");
                 return Folders;
             }
-            catch
+            catch (JsonException)
             {
-                Info?.Invoke("ERROR", $"{jsonFile} не найден.");                
+                Info?.Invoke("ERROR", $"Недопустимый JSON {jsonFile}");                
+                return null;
+            }
+            catch (NotSupportedException)
+            {
+                Info?.Invoke("ERROR", "Совместимые объекты JsonConverter для TValue или его сериализуемых членов отсутствуют.");
                 return null;
             }
         }
