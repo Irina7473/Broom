@@ -38,6 +38,7 @@ namespace BroomGUI
         public MainWindow()
         {
             InitializeComponent();            
+
             //ProgressBar_slider.Visibility = Visibility.Hidden;
             //ProgressBar_slider.IsIndeterminate = false;
 
@@ -62,12 +63,12 @@ namespace BroomGUI
             RecycleBinFolder.Info += AppendFormattedText;
 
             record?.Invoke("INFO", "Запуск программы.");            
-            removeList = RemoveList.GetRemoveList();             
+            removeList = RemoveList.GetRemoveList();               
             if (removeList != null)
             {
                 record?.Invoke("INFO", $"Считано {removeList.Count} записей кофигурационного файла.");
                 selectedList = new List<string>();
-                ListView_folders.ItemsSource = removeList;        
+                ListView_folders.ItemsSource = removeList;
             }
             TextBlock_sbar.Text = "Можно удалять";
         }
@@ -79,21 +80,17 @@ namespace BroomGUI
             {
                 if (item == "Очистить все")
                 {
-                    //to do
                     foreach (var element in removeList)
-                    {                        
+                    {
                         record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles + element.NFolders} объектов");
-
                         element.DeleteSelected(element.Path, element.Path);                        
                     }
-                    RecycleBinFolder.Delete();                    
-                    CheckBox_clearAll.IsChecked = false;
+                    RecycleBinFolder.Delete();
                 }
                 else if (item == "Очистить корзину")
                 {
                     //to do
                     RecycleBinFolder.Delete();
-                    CheckBox_clearBasket.IsChecked = false;
                 }
                 else
                     foreach (var element in removeList)
@@ -105,12 +102,13 @@ namespace BroomGUI
                         }
                     }
             }
-
             TextBlock_sbar.Text = "Удаление завершено";
             record?.Invoke("INFO", "Удаление завершено");                        
             selectedList = new List<string>();
             removeList.Clear();
             removeList = RemoveList.GetRemoveList();
+            CheckBox_clearAll.IsChecked = false;
+            CheckBox_clearBasket.IsChecked = false;
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)

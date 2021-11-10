@@ -56,15 +56,15 @@
                                 <Label Grid.Row="0" 
                                        Content="Выберите места очистки" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
                                 <CheckBox Grid.Row="1" x:Name="CheckBox_clearAll" Content="Очистить все" 
-                                          Checked="CheckBox_select_Checked"
+                                          Checked="CheckBox_select_Checked" Unchecked="CheckBox_select_Unchecked"
                                           VerticalAlignment="Center" Margin="12,0,0,0" />
                                 <CheckBox Grid.Row="2" x:Name="CheckBox_clearBasket" Content="Очистить корзину" 
-                                          Checked="CheckBox_select_Checked"
+                                          Checked="CheckBox_select_Checked" Unchecked="CheckBox_select_Unchecked"
                                           VerticalAlignment="Center" Margin="12,0,0,0"/>
                                 <ListView Grid.Row="3" x:Name="ListView_folders" Background="GhostWhite" BorderThickness="0">                                    
                                     <ListView.ItemTemplate>
-                                        <DataTemplate DataType="FindPathsFolders" > 
-                                            <StackPanel Orientation="Horizontal">
+                                        <DataTemplate DataType="FindPathsFolders" >
+                                            <StackPanel Orientation="Horizontal" IsEnabled="{Binding FillDir}">
                                                 <CheckBox  x:Name="CheckBox_select" Content = "{Binding Name}"  
                                                            Checked="CheckBox_select_Checked" Unchecked="CheckBox_select_Unchecked"
                                                            Width="200" Margin="5,5,0,0"/>

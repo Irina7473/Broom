@@ -16,13 +16,14 @@ namespace FilesAndFolders
         public int NFiles { get; set; }       
         public int NFolders { get; set; }
         public double SizeDir { get; set; }
+        public bool FillDir { get; set; }
 
         public static bool CheckPaths(string path)
         {
             if (Directory.Exists(path)) return true;
             else
             {
-                Info?.Invoke("WARN", $"Каталог {path} не существует или нет разрешения на доступ к нему");
+                Info?.Invoke("WARN", $"Каталог {path} не существует");
                 return false;
             }
         }
@@ -106,10 +107,9 @@ namespace FilesAndFolders
                 catch (IOException)
                 { Info?.Invoke("ERROR", $"Произошла сетевая ошибка при доступе к {path}"); }
                 catch
-                { Info?.Invoke("ERROR", $"Неизвестная ошибка при доступе к {path}"); }
-
-                Info?.Invoke("SUCCESS", $"Удалено {count} объектов");
+                { Info?.Invoke("ERROR", $"Неизвестная ошибка при доступе к {path}"); }               
             }
+            Info?.Invoke("INFO", $"В {path} удалено {count} объектов");
         }
     }
     
@@ -130,6 +130,9 @@ namespace FilesAndFolders
                         filling.Path = f.Value;                        
                         filling.CountFilesAndFolders(filling.Path);
                         filling.SizeDir = Math.Round(filling.SizeDir / 1048576, 1);
+                        if (filling.NFiles == 0 && filling.NFolders == 0) 
+                            filling.FillDir = false; 
+                        else filling.FillDir = true;
                         RemoveCollection.Add(filling);
                     }
                 }
