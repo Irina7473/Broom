@@ -20,13 +20,24 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Border DockPanel.Dock="Top" BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10" Height="110">
-                <!-- <Image Source="broom.jpg" ></Image> -->
+            <Border DockPanel.Dock="Top" BorderThickness = "1" BorderBrush = "MediumPurple"  Background="White" Margin = "10" Height="150">
+                <Grid>
+                    <Image Source="Resources/broomP3.jpg" Stretch="Uniform" HorizontalAlignment="Left"/>
+                    <TextBlock Text="BROOM"  
+                           Margin="10" HorizontalAlignment="Center" TextAlignment="Right"
+                           Width="500" Height="130" FontSize="90" 
+                           FontFamily="Segoe Print" FontStyle="Normal"  
+                           Foreground="Purple"    FontWeight="Bold">
+                    </TextBlock>
+                    <TextBlock Text="v 1.0"  
+                           Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                           Width="100" Height="50" FontSize="30" 
+                           FontFamily="Segoe Print" FontStyle="Normal"  
+                           Foreground="Purple"    FontWeight="Bold">
+                    </TextBlock>
+                </Grid>
                 
-                <TextBlock Text="BROOM" Background="White" 
-                           Margin="10" TextAlignment="Center" Height="110" 
-                           FontFamily="Segoe Print" FontSize="60" FontStyle="Normal" FontWeight="Bold">
-                </TextBlock>
+                
             </Border> 
             <StatusBar DockPanel.Dock="Bottom" HorizontalAlignment="Center">
                 <TextBlock x:Name="TextBlock_sbar" Width="200" Height="20"/>

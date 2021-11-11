@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\broom.jpg" />
+    <None Remove="Resources\broom1.jpeg" />
+    <None Remove="Resources\broom2.jpg" />
+    <None Remove="Resources\broom3.jpg" />
+    <None Remove="Resources\broom32.jpg" />
+    <None Remove="Resources\broom4.jpg" />
+    <None Remove="Resources\broom5.jpg" />
+    <None Remove="Resources\broomP.jpg" />
+    <None Remove="Resources\broomP1.jpg" />
+    <None Remove="Resources\broomP2.jpg" />
+    <None Remove="Resources\broomP3.jpg" />
+    <None Remove="Resources\broom_s.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.7" />
     <ProjectReference Include="..\FindFolders\FilesAndFolders.csproj" />
     <ProjectReference Include="..\Logger\Logger.csproj" />
@@ -16,6 +31,12 @@
     <None Update="broom.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\broomP3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

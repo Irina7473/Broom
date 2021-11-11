@@ -70,11 +70,18 @@ namespace BroomGUI
                 selectedList = new List<string>();
                 ListView_folders.ItemsSource = removeList;
             }
-            TextBlock_sbar.Text = "Можно удалять";
+            TextBlock_sbar.Text = "Не выбраны места очистки";
         }
 
         private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            if (selectedList.Count == 0)
+            {
+                TextBlock_sbar.Text = "Не выбраны места очистки";
+                MessageBox.Show ("Не выбраны места очистки");
+                return;
+            }
+
             TextBlock_sbar.Text = "Удаление";
             foreach (var item in selectedList)
             {
