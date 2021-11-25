@@ -20,8 +20,7 @@ namespace BroomGUI
         
         ObservableCollection<ActionsWithFilesAndFolders> removeList;
         List<string> selectedList;
-        //LogToDB log; //для базы данных
-        LogToFile log2; //для текст файла
+        LogToDB log; //для базы данных        
         Message record;
 
         public MainWindow()
@@ -31,24 +30,15 @@ namespace BroomGUI
             //ProgressBar_slider.Visibility = Visibility.Hidden;
             //ProgressBar_slider.IsIndeterminate = false;
 
-            /* Для журналирования в базу данных
+            //Для журналирования в базу данных
             log = new LogToDB();
             record = log.RecordToLog;
             record += AppendFormattedText;
             ReadPaths.Info = log.RecordToLog;
             ReadPaths.Info += AppendFormattedText;
             ActionsWithFilesAndFolders.Info = log.RecordToLog;
-            ActionsWithFilesAndFolders.Info += AppendFormattedText;
-            */
-            // Для журналирования в текстовый файл
-            log2 = new LogToFile();
-            record = log2.RecordToLog;
-            record += AppendFormattedText;
-            ReadPaths.Info = log2.RecordToLog;
-            ReadPaths.Info += AppendFormattedText;
-            ActionsWithFilesAndFolders.Info = log2.RecordToLog;
-            ActionsWithFilesAndFolders.Info += AppendFormattedText;
-            RecycleBinFolder.Info = log2.RecordToLog;
+            ActionsWithFilesAndFolders.Info += AppendFormattedText;            
+            RecycleBinFolder.Info = log.RecordToLog;
             RecycleBinFolder.Info += AppendFormattedText;
 
             record?.Invoke("INFO", "Запуск программы.");            
@@ -125,15 +115,13 @@ namespace BroomGUI
         private void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
             RichTextBox_log.Document.Blocks.Clear();
-            //RichTextBox_log.AppendText(log.ReadTheLog()+ "\r");  //для базы данных
-            RichTextBox_log.AppendText(log2.ReadTheLog() + "\r");
+            RichTextBox_log.AppendText(log.ReadTheLog()+ "\r"); 
             ProgressBar_slider.IsIndeterminate = false;
             TextBlock_sbar.Text = "Журнал удалений загружен";            
         }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
-            //log.ClearLog(); //для базы данных
-            log2.ClearLog();
+            log.ClearLog(); 
             TextBlock_sbar.Text = "Журнал удалений очищен";
         }
 
@@ -161,81 +149,3 @@ namespace BroomGUI
         }    
     }
 }
-
-/*
- *  Task.Run(() =>
-                            {
-                                element.DeleteSelected(element.Path, element.Path);
-                            });  
- * 
- * var processor = new Processor();
-            processor.Progress += ProcessorProgress;
-            var thread = new Thread(processor.DoWork);
-            thread.Start();
-            //Window_ContentRendered(sender, e);
-
- //Вариант1
-<!-- ContentRendered="Window_ContentRendered"-->
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-
-            worker.RunWorkerAsync();
-        }
-
-        void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                (sender as BackgroundWorker).ReportProgress(i);
-                Thread.Sleep(10);
-            }
-        }
-
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressBar_status.Value = e.ProgressPercentage;
-        }
-                
-        //Вариант 2
-        public delegate void ProgressHandler(int progress);
-        public class Processor
-        {
-            public event ProgressHandler Progress;
-
-            public void DoWork()
-            {
-                for (int i = 1; i <= 100; ++i)
-                {
-                    Thread.Sleep(10);
-                    if (Progress != null)
-                        Progress(i);
-                }
-            }
-        }
-
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            var processor = new Processor();
-            processor.Progress += ProcessorProgress;
-
-            var thread = new Thread(processor.DoWork);
-            thread.Start();
-        }
-
-        void ProcessorProgress(int progress)
-        {            
-            if (!ProgressBar_status.Dispatcher.CheckAccess())
-            {
-                ProgressBar_status.Dispatcher.Invoke(new ProgressHandler(ProcessorProgress), progress);
-            }
-            else
-            {
-                ProgressBar_status.Value = progress;
-            }
-        }
-  */
