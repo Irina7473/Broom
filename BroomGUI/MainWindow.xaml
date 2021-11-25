@@ -116,25 +116,7 @@
                             </ScrollViewer>
                         </Border>
                     </DockPanel>
-                </TabItem >
-                <!--     Другой вывод           
-                <TabItem Header = "Результат выполнения2" FontSize = "12" >
-                    <DockPanel Background="GhostWhite">
-                        <Button DockPanel.Dock="Bottom" x:Name = "Button_clearLog2" 
-                                Content = "Очистить лог" Click="Button_clearLog_Click"                                 
-                                Style="{DynamicResource style_Button}" />
-                        <Border BorderThickness = "1" BorderBrush = "MediumPurple" >
-                            <FlowDocumentReader>
-                                    <FlowDocument>
-                                    <Paragraph  x:Name="Paragraph_log" TextIndent="5" FontSize = "12">
-                                        <Run></Run>
-                                        </Paragraph>
-                                    </FlowDocument>
-                            </FlowDocumentReader>
-                        </Border>
-                    </DockPanel>
-                </TabItem >
-                -->
+                </TabItem >                
             </TabControl>
         </DockPanel>
     </Grid>
