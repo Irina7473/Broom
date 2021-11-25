@@ -20,8 +20,7 @@ namespace BroomGUI
         
         ObservableCollection<ActionsWithFilesAndFolders> removeList;
         List<string> selectedList;
-        //LogToDB log; //для базы данных
-        LogToFile log2; //для текст файла
+        LogToFile log; //для текст файла
         Message record;
 
         public MainWindow()
@@ -30,25 +29,15 @@ namespace BroomGUI
 
             //ProgressBar_slider.Visibility = Visibility.Hidden;
             //ProgressBar_slider.IsIndeterminate = false;
-
-            /* Для журналирования в базу данных
-            log = new LogToDB();
+                                    
+            log = new LogToFile();
             record = log.RecordToLog;
             record += AppendFormattedText;
             ReadPaths.Info = log.RecordToLog;
             ReadPaths.Info += AppendFormattedText;
             ActionsWithFilesAndFolders.Info = log.RecordToLog;
             ActionsWithFilesAndFolders.Info += AppendFormattedText;
-            */
-            // Для журналирования в текстовый файл
-            log2 = new LogToFile();
-            record = log2.RecordToLog;
-            record += AppendFormattedText;
-            ReadPaths.Info = log2.RecordToLog;
-            ReadPaths.Info += AppendFormattedText;
-            ActionsWithFilesAndFolders.Info = log2.RecordToLog;
-            ActionsWithFilesAndFolders.Info += AppendFormattedText;
-            RecycleBinFolder.Info = log2.RecordToLog;
+            RecycleBinFolder.Info = log.RecordToLog;
             RecycleBinFolder.Info += AppendFormattedText;
 
             record?.Invoke("INFO", "Запуск программы.");            
@@ -125,15 +114,13 @@ namespace BroomGUI
         private void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
             RichTextBox_log.Document.Blocks.Clear();
-            //RichTextBox_log.AppendText(log.ReadTheLog()+ "\r");  //для базы данных
-            RichTextBox_log.AppendText(log2.ReadTheLog() + "\r");
+            RichTextBox_log.AppendText(log.ReadTheLog() + "\r");
             ProgressBar_slider.IsIndeterminate = false;
             TextBlock_sbar.Text = "Журнал удалений загружен";            
         }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
-        {
-            //log.ClearLog(); //для базы данных
-            log2.ClearLog();
+        {            
+            log.ClearLog();
             TextBlock_sbar.Text = "Журнал удалений очищен";
         }
 
@@ -154,7 +141,6 @@ namespace BroomGUI
             if (type == "ERROR") rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
 
             TextRange rangeOfWord = new TextRange(RichTextBox_log.Document.ContentEnd, RichTextBox_log.Document.ContentEnd);
-            //rangeOfWord.Text = " " + text + "\r";  //для базы данных
             rangeOfWord.Text = " " + DateTime.Now + " " + Environment.UserName + " " + text + "\r";
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
