@@ -38,8 +38,8 @@
         <Setter Property="Width" Value="300" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Margin" Value="10" />
+        <Setter Property="Background" Value="GhostWhite" />
         <!--
-        <Setter Property="Background" Value="Lavender" />
         <Setter Property="BorderBrush" Value="MediumPurple" />
         <Setter Property="BorderThickness" Value="1" />   -->
         

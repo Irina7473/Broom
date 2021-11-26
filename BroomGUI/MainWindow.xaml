@@ -39,7 +39,7 @@
                 
                 
             </Border> 
-            <StatusBar DockPanel.Dock="Bottom" HorizontalAlignment="Center">
+            <StatusBar DockPanel.Dock="Bottom" HorizontalAlignment="Center" Background="Lavender">
                 <TextBlock x:Name="TextBlock_sbar" Width="200" Height="20"/>
                 <ProgressBar Name="ProgressBar_slider" Minimum="0" Maximum="100"                                
                                  Style="{DynamicResource style_ProgressBar1}"/>

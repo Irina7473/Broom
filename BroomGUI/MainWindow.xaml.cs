@@ -96,7 +96,8 @@ namespace BroomGUI
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)
-        {                        
+        {
+            TextBlock_sbar.Text = "Выбор мест очистки";
             if (((CheckBox)sender).IsChecked == true)
             {
                 selectedList.Add((sender as CheckBox).Content.ToString());
@@ -113,19 +114,22 @@ namespace BroomGUI
 
         private void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
+            //TextBlock_sbar.Text = "Загружаю журнал удалений";
             RichTextBox_log.Document.Blocks.Clear();
             RichTextBox_log.AppendText(log.ReadTheLog() + "\r");
             ProgressBar_slider.IsIndeterminate = false;
             TextBlock_sbar.Text = "Журнал удалений загружен";            
         }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            //TextBlock_sbar.Text = "Очищаю журнал удалений";
             log.ClearLog();
             TextBlock_sbar.Text = "Журнал удалений очищен";
         }
 
         private void Button_clearShowing_Click(object sender, RoutedEventArgs e)
         {
+            //TextBlock_sbar.Text = "Очищаю показ";
             RichTextBox_log.Document.Blocks.Clear();
             TextBlock_sbar.Text = "Показ очищен";
         }
