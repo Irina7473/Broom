@@ -35,9 +35,7 @@
                            FontFamily="Segoe Print" FontStyle="Normal"  
                            Foreground="Purple"    FontWeight="Bold">
                     </TextBlock>
-                </Grid>
-                
-                
+                </Grid>     
             </Border> 
             <StatusBar DockPanel.Dock="Bottom" HorizontalAlignment="Center" Background="Lavender">
                 <TextBlock x:Name="TextBlock_sbar" Width="200" Height="20"/>
@@ -53,9 +51,15 @@
             <TabControl Margin="10">
                 <TabItem Header = "Основное" FontSize = "12" >
                     <DockPanel Background="GhostWhite">
-                        <Button DockPanel.Dock="Bottom" x:Name = "Button_startCleaning" 
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" 
+                                    HorizontalAlignment="Center">
+                            <Button x:Name = "Button_updateList" 
+                                Content = "Обновить список" Click="Button_updateList_Click"                                
+                                Style="{DynamicResource style_Button}" />
+                            <Button x:Name = "Button_startCleaning" 
                                 Content = "Начать очистку" Click="Button_startCleaning_Click"                                
                                 Style="{DynamicResource style_Button}" />
+                        </StackPanel>
                         <Border BorderThickness = "1" BorderBrush = "MediumPurple" Margin = "10">
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>

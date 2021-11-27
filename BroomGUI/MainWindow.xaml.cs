@@ -51,48 +51,59 @@ namespace BroomGUI
             TextBlock_sbar.Text = "Не выбраны места очистки";
         }
 
-        private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
+        private void Button_updateList_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedList.Count == 0)
-            {
-                TextBlock_sbar.Text = "Не выбраны места очистки";
-                MessageBox.Show ("Не выбраны места очистки");
-                return;
-            }
-
-            TextBlock_sbar.Text = "Удаление";
-            foreach (var item in selectedList)
-            {
-                if (item == "Очистить все")
-                {
-                    foreach (var element in removeList)
-                    {
-                        record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles + element.NFolders} объектов");
-                        element.DeleteSelected(element.Path, element.Path);                        
-                    }
-                    RecycleBinFolder.Delete();
-                }
-                else if (item == "Очистить корзину")
-                {                    
-                    RecycleBinFolder.Delete();
-                }
-                else
-                    foreach (var element in removeList)
-                    {                    
-                        if (element.Name == item)
-                        {
-                            record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles+element.NFolders} объектов");
-                            element.DeleteSelected(element.Path, element.Path);                                                                     
-                        }
-                    }
-            }
-            TextBlock_sbar.Text = "Удаление завершено";
-            record?.Invoke("INFO", "Удаление завершено");                        
             selectedList = new List<string>();
             removeList.Clear();
             removeList = RemoveList.GetRemoveList();
             CheckBox_clearAll.IsChecked = false;
             CheckBox_clearBasket.IsChecked = false;
+        }
+
+        private void Button_startCleaning_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedList.Count == 0)
+            {
+                TextBlock_sbar.Text = "Не выбраны места очистки";
+                MessageBox.Show("Не выбраны места очистки");
+                return;
+            }
+            else
+            {
+                TextBlock_sbar.Text = "Удаление";
+                foreach (var item in selectedList)
+                {
+                    if (item == "Очистить все")
+                    {
+                        foreach (var element in removeList)
+                        {
+                            record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles + element.NFolders} объектов");
+                            element.DeleteSelected(element.Path, element.Path);
+                        }
+                        RecycleBinFolder.Delete();
+                    }
+                    else if (item == "Очистить корзину")
+                    {
+                        RecycleBinFolder.Delete();
+                    }
+                    else
+                        foreach (var element in removeList)
+                        {
+                            if (element.Name == item)
+                            {
+                                record?.Invoke("INFO", $"Подготовлено к удалению {element.NFiles + element.NFolders} объектов");
+                                element.DeleteSelected(element.Path, element.Path);
+                            }
+                        }
+                }
+                TextBlock_sbar.Text = "Удаление завершено";
+                record?.Invoke("INFO", "Удаление завершено");
+                selectedList = new List<string>();
+                removeList.Clear();
+                removeList = RemoveList.GetRemoveList();
+                CheckBox_clearAll.IsChecked = false;
+                CheckBox_clearBasket.IsChecked = false;
+            }
         }
 
         private void CheckBox_select_Checked(object sender, RoutedEventArgs e)
@@ -122,7 +133,7 @@ namespace BroomGUI
         }
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
-            //TextBlock_sbar.Text = "Очищаю журнал удалений";
+            //TextBlock_sbar.Text = "Очищаю журнал удалений";.
             log.ClearLog();
             TextBlock_sbar.Text = "Журнал удалений очищен";
         }
@@ -148,7 +159,7 @@ namespace BroomGUI
             rangeOfWord.Text = " " + DateTime.Now + " " + Environment.UserName + " " + text + "\r";
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
-        }    
+        }
     }
 }
 
