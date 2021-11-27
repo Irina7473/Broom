@@ -16,7 +16,6 @@
                 <MenuItem Header="Help">
                     <MenuItem Header="О программе"></MenuItem>
                     <MenuItem Header="Справка">
-                        
                     </MenuItem>
                 </MenuItem>
             </Menu>
