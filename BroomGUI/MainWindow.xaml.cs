@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 using FilesAndFolders;
 using Logger;
-
 
 namespace BroomGUI
 {
@@ -22,13 +24,14 @@ namespace BroomGUI
         List<string> selectedList;
         LogToFile log; //для текст файла
         Message record;
+        private CancellationTokenSource cancelToken;
 
         public MainWindow()
         {
             InitializeComponent();            
 
             //ProgressBar_slider.Visibility = Visibility.Hidden;
-            //ProgressBar_slider.IsIndeterminate = false;
+            ProgressBar_slider.IsIndeterminate = false;
                                     
             log = new LogToFile();
             record = log.RecordToLog;
@@ -123,14 +126,44 @@ namespace BroomGUI
             }
         }
 
-        private void Button_showAll_Click(object sender, RoutedEventArgs e)
+        private async void Button_showAll_Click(object sender, RoutedEventArgs e)
         {
             //TextBlock_sbar.Text = "Загружаю журнал удалений";
-            RichTextBox_log.Document.Blocks.Clear();
-            RichTextBox_log.AppendText(log.ReadTheLog() + "\r");
-            ProgressBar_slider.IsIndeterminate = false;
-            TextBlock_sbar.Text = "Журнал удалений загружен";            
+            //RichTextBox_log.Document.Blocks.Clear();
+            //RichTextBox_log.AppendText(log.ReadTheLog() + "\r");
+            ProgressBar_slider.IsIndeterminate = true;
+
+            if (cancelToken != null) return;
+            try
+            {
+                using (cancelToken = new CancellationTokenSource())
+                {
+                    
+                   await ShowAllLogAsync(RichTextBox_log, cancelToken.Token);
+                }
+            }
+            catch (Exception exception)
+            {
+                //MessageBox.Show(exception.Message);
+            }
+            finally
+            {
+                cancelToken = null;
+            }
+            TextBlock_sbar.Text = "Журнал удалений загружен";
+           // ProgressBar_slider.IsIndeterminate = false;
         }
+    
+        private async Task ShowAllLogAsync(RichTextBox output, CancellationToken token)
+        {
+            await output.Dispatcher.Invoke(async () =>
+            {
+                output.Document.Blocks.Clear();
+                output.AppendText(log.ReadTheLog() + "\r");
+                await Task.Delay(10, token);
+            }, DispatcherPriority.Normal, token);
+        }
+
         private void Button_clearLog_Click(object sender, RoutedEventArgs e)
         {
             //TextBlock_sbar.Text = "Очищаю журнал удалений";.
